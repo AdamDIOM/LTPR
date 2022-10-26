@@ -1,18 +1,38 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+main {
+    min-height: 85vh;
+}
+
+header {
+    background-color: #ff8888;
+}
+
+footer {
+    background-color: forestgreen;
+    color: antiquewhite;
+    height: 5vh;
+    text-align: center;
+    padding: 10px
+}
+
+    footer a {
+        color: antiquewhite;
+    }
+
+.gallery-image {
+    width: 100%;
 }
