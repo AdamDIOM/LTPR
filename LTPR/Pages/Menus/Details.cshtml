@@ -1,0 +1,70 @@
+﻿@page
+@model LTPR.Pages.Menus.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Menu info</h1>
+
+<div>
+    <hr />
+    <h4>@Html.DisplayFor(model => model.tblMenus.Name)</h4>
+</div>
+<div class="accordion">
+
+    <div class="accordion accordion-flush" id="accordion">
+    @foreach (var item in Model.tblItemOnMenu)
+    {
+        @if(item.MID == Model.tblMenus.ID)
+        {
+            @*@item.IID*@
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id=@("heading" + item.IID)>
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + item.IID)>
+                            <div class="row">
+                                <div class="col-6">
+                                    @Html.DisplayFor(modelItem => Model.tblMenuItem[item.IID-1].Name)
+                                </div>
+                                <div class="col-6">
+                                    @Html.DisplayFor(modelItem => Model.tblMenuItem[item.IID-1].Cost)
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id=@("collapse" + item.IID) class="accordion-collapse collapse" aria-labelledby=@("heading" + item.IID) data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            @Html.DisplayFor(modelItem => Model.tblMenuItem[item.IID-1].Description)     
+                           <h5>Ingredients</h5>
+
+                            <ul>
+                                
+                            @foreach(var mitem in Model.tblIngredientInItem)
+                            {
+                                @if(mitem.MIID == item.IID)
+                                {
+                                        <li>@Html.DisplayFor(model => Model.tblIngredients[mitem.IID-1].Name)</li>
+                                    
+                                }
+                            }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    @*<a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.MID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>*@
+                </div>
+          
+        }
+            
+            
+    }
+
+    </div>
+    </div>
+<div>
+    @*<a asp-page="./Edit" asp-route-id="@Model.tblMenus?.ID">Edit</a> |*@
+    <a asp-page="./Index">Back to Menus</a>
+</div>

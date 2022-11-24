@@ -36,3 +36,9 @@ footer {
 .gallery-image {
     width: 100%;
 }
+
+.item{
+    border:2px solid forestgreen;
+    padding:2px;
+    margin-bottom:5px;
+}

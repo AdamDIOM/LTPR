@@ -5,8 +5,6 @@ namespace LTPR.Pages
 {
     public class ContattoModel : PageModel
     {
-        public void OnGet()
-        {
-        }
+        
     }
 }
