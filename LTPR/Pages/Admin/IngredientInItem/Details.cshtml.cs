@@ -28,7 +28,7 @@ namespace LTPR.Pages.Admin.IngredientInItem
                 return NotFound();
             }
 
-            var tblingredientinitem = await _context.tblIngredientInItem.FirstOrDefaultAsync(m => m.KID == id);
+            var tblingredientinitem = await _context.tblIngredientInItem.FirstOrDefaultAsync(m => m.ID == id);
             if (tblingredientinitem == null)
             {
                 return NotFound();

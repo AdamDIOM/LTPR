@@ -21,6 +21,8 @@ namespace LTPR.Pages.Admin.IngredientInItem
 
         [BindProperty]
       public tblIngredientInItem tblIngredientInItem { get; set; }
+        public IList<tblMenuItem> tblMenuItem { get; set; } = default!;
+        public IList<tblIngredients> tblIngredients { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,7 +31,17 @@ namespace LTPR.Pages.Admin.IngredientInItem
                 return NotFound();
             }
 
-            var tblingredientinitem = await _context.tblIngredientInItem.FirstOrDefaultAsync(m => m.KID == id);
+
+            if (_context.tblMenuItem != null)
+            {
+                tblMenuItem = await _context.tblMenuItem.ToListAsync();
+            }
+            if (_context.tblIngredients != null)
+            {
+                tblIngredients = await _context.tblIngredients.ToListAsync();
+            }
+
+            var tblingredientinitem = await _context.tblIngredientInItem.FirstOrDefaultAsync(m => m.ID == id);
 
             if (tblingredientinitem == null)
             {

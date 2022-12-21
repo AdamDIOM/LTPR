@@ -28,7 +28,7 @@ namespace LTPR.Pages.Admin.ItemOnMenu
                 return NotFound();
             }
 
-            var tblitemonmenu = await _context.tblItemOnMenu.FirstOrDefaultAsync(m => m.KID == id);
+            var tblitemonmenu = await _context.tblItemOnMenu.FirstOrDefaultAsync(m => m.ID == id);
             if (tblitemonmenu == null)
             {
                 return NotFound();

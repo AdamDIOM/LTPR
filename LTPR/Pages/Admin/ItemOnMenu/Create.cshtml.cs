@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using LTPR.Data;
 using LTPR.Models;
 
@@ -19,8 +20,24 @@ namespace LTPR.Pages.Admin.ItemOnMenu
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IList<tblMenus> tblMenus { get; set; } = default!;
+        public IList<tblMenuItem> tblMenuItem { get; set; } = default!;
+        public IList<tblItemOnMenu> tblIOM { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (_context.tblMenus != null)
+            {
+                tblMenus = await _context.tblMenus.ToListAsync();
+            }
+            if (_context.tblMenuItem != null)
+            {
+                tblMenuItem = await _context.tblMenuItem.ToListAsync();
+            }
+            if (_context.tblItemOnMenu != null)
+            {
+                tblIOM = await _context.tblItemOnMenu.ToListAsync();
+            }
             return Page();
         }
 
@@ -35,9 +52,12 @@ namespace LTPR.Pages.Admin.ItemOnMenu
             {
                 return Page();
             }
-
-            _context.tblItemOnMenu.Add(tblItemOnMenu);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.tblItemOnMenu.Add(tblItemOnMenu);
+                await _context.SaveChangesAsync();
+            }
+            catch { }
 
             return RedirectToPage("./Index");
         }

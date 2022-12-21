@@ -2,33 +2,66 @@
 @model LTPR.Pages.Admin.MenuAtRestaurant.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Menu at Restaurants Delete - Admin Data Editor";
 }
 
-<h1>Delete</h1>
+<h1>Remove Menu from Restaurant</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to remove this?</h3>
 <div>
-    <h4>tblMenuAtRestaurant</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.tblMenuAtRestaurant.RID)
+            Restaurant
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.tblMenuAtRestaurant.RID)
+            @{
+                var foundId = -1;
+                @for (int i = 0; i < Model.tblRestaurants.Count(); i++)
+                {
+                    if (Model.tblMenuAtRestaurant.RID == Model.tblRestaurants[i].ID)
+                    {
+                        foundId = i;
+                    }
+                }
+                if (foundId == -1)
+                {
+                    @Html.DisplayFor(modelItem => Model.tblMenuAtRestaurant.RID)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => Model.tblRestaurants[foundId].Name)
+                }
+            }
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.tblMenuAtRestaurant.MID)
+            Menu
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.tblMenuAtRestaurant.MID)
+            @{
+                foundId = -1;
+                @for (int i = 0; i < Model.tblMenus.Count(); i++)
+                {
+                    if (Model.tblMenuAtRestaurant.MID == Model.tblMenus[i].ID)
+                    {
+                        foundId = i;
+                    }
+                }
+                if (foundId == -1)
+                {
+                    @Html.DisplayFor(modelItem => Model.tblMenuAtRestaurant.MID)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => Model.tblMenus[foundId].Name)
+                }
+            }
         </dd>
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="tblMenuAtRestaurant.KID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="hidden" asp-for="tblMenuAtRestaurant.ID" />
+        <input type="submit" value="Remove" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>
 </div>

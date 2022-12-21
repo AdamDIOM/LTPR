@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using LTPR.Data;
 using LTPR.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LTPR.Pages.Admin.Restaurants
 {
@@ -21,12 +22,14 @@ namespace LTPR.Pages.Admin.Restaurants
 
         public IActionResult OnGet()
         {
+
             return Page();
         }
 
         [BindProperty]
         public tblRestaurants tblRestaurants { get; set; }
-        
+
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

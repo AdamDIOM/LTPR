@@ -6,7 +6,7 @@ namespace LTPR.Models
     public class tblMenuAtRestaurant
     {
         [Key]
-        public int KID { get; set; }
+        public int ID { get; set; }
         [Required]
         public int RID { get; set; }
         [Required]

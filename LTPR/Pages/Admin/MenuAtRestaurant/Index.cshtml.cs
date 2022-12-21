@@ -19,13 +19,23 @@ namespace LTPR.Pages.Admin.MenuAtRestaurant
             _context = context;
         }
 
-        public IList<tblMenuAtRestaurant> tblMenuAtRestaurant { get;set; } = default!;
+        public IList<tblMenuAtRestaurant> tblMenuAtRestaurant { get; set; } = default!;
+        public IList<tblRestaurants> tblRestaurants { get; set; } = default!;
+        public IList<tblMenus> tblMenus { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.tblMenuAtRestaurant != null)
             {
                 tblMenuAtRestaurant = await _context.tblMenuAtRestaurant.ToListAsync();
+            }
+            if (_context.tblRestaurants != null)
+            {
+                tblRestaurants = await _context.tblRestaurants.ToListAsync();
+            }
+            if (_context.tblMenus != null)
+            {
+                tblMenus = await _context.tblMenus.ToListAsync();
             }
         }
     }

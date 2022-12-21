@@ -20,12 +20,22 @@ namespace LTPR.Pages.Admin.IngredientInItem
         }
 
         public IList<tblIngredientInItem> tblIngredientInItem { get;set; } = default!;
+        public IList<tblMenuItem> tblMenuItem { get; set; } = default!;
+        public IList<tblIngredients> tblIngredients { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.tblIngredientInItem != null)
             {
                 tblIngredientInItem = await _context.tblIngredientInItem.ToListAsync();
+            }
+            if (_context.tblMenuItem != null)
+            {
+                tblMenuItem = await _context.tblMenuItem.ToListAsync();
+            }
+            if (_context.tblIngredients != null)
+            {
+                tblIngredients = await _context.tblIngredients.ToListAsync();
             }
         }
     }

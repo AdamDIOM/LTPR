@@ -37,6 +37,26 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        @*<hr />
+        <h4>Add Menu</h4>
+        <select class="menuSelector" name="menu">
+            @foreach (var menu in Model.tblMenus)
+            {
+                var exists = false;
+                foreach (var mar in Model.tblMenuAtRestaurant)
+                {
+                    if (mar.RID == Model.tblRestaurants.ID && mar.MID == menu.ID)
+                    {
+                        exists = true;
+                    }
+                }
+                if (!exists)
+                {
+                    <option value="menu.ID">@menu.Name</option>
+                }
+            }
+        </select>
+        <input class="btn btn-primary" value="Add" />*@
     </div>
 </div>
 

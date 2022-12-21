@@ -30,7 +30,7 @@ namespace LTPR.Pages.Admin.MenuAtRestaurant
                 return NotFound();
             }
 
-            var tblmenuatrestaurant =  await _context.tblMenuAtRestaurant.FirstOrDefaultAsync(m => m.KID == id);
+            var tblmenuatrestaurant =  await _context.tblMenuAtRestaurant.FirstOrDefaultAsync(m => m.ID == id);
             if (tblmenuatrestaurant == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace LTPR.Pages.Admin.MenuAtRestaurant
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!tblMenuAtRestaurantExists(tblMenuAtRestaurant.KID))
+                if (!tblMenuAtRestaurantExists(tblMenuAtRestaurant.ID))
                 {
                     return NotFound();
                 }
@@ -71,7 +71,7 @@ namespace LTPR.Pages.Admin.MenuAtRestaurant
 
         private bool tblMenuAtRestaurantExists(int id)
         {
-          return _context.tblMenuAtRestaurant.Any(e => e.KID == id);
+          return _context.tblMenuAtRestaurant.Any(e => e.ID == id);
         }
     }
 }

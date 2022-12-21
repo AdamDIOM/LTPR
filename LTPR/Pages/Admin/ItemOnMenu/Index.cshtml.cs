@@ -20,12 +20,22 @@ namespace LTPR.Pages.Admin.ItemOnMenu
         }
 
         public IList<tblItemOnMenu> tblItemOnMenu { get;set; } = default!;
+        public IList<tblMenus> tblMenus { get; set; } = default!;
+        public IList<tblMenuItem> tblMenuItem { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.tblItemOnMenu != null)
             {
                 tblItemOnMenu = await _context.tblItemOnMenu.ToListAsync();
+            }
+            if (_context.tblMenus != null)
+            {
+                tblMenus = await _context.tblMenus.ToListAsync();
+            }
+            if (_context.tblMenuItem != null)
+            {
+                tblMenuItem = await _context.tblMenuItem.ToListAsync();
             }
         }
     }

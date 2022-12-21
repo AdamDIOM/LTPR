@@ -30,7 +30,7 @@ namespace LTPR.Pages.Admin.IngredientInItem
                 return NotFound();
             }
 
-            var tblingredientinitem =  await _context.tblIngredientInItem.FirstOrDefaultAsync(m => m.KID == id);
+            var tblingredientinitem =  await _context.tblIngredientInItem.FirstOrDefaultAsync(m => m.ID == id);
             if (tblingredientinitem == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace LTPR.Pages.Admin.IngredientInItem
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!tblIngredientInItemExists(tblIngredientInItem.KID))
+                if (!tblIngredientInItemExists(tblIngredientInItem.ID))
                 {
                     return NotFound();
                 }
@@ -71,7 +71,7 @@ namespace LTPR.Pages.Admin.IngredientInItem
 
         private bool tblIngredientInItemExists(int id)
         {
-          return _context.tblIngredientInItem.Any(e => e.KID == id);
+          return _context.tblIngredientInItem.Any(e => e.ID == id);
         }
     }
 }

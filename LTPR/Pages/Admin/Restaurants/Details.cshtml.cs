@@ -21,11 +21,25 @@ namespace LTPR.Pages.Admin.Restaurants
 
       public tblRestaurants tblRestaurants { get; set; }
 
+
+        public IList<tblMenus> tblMenus { get; set; } = default!;
+        public IList<tblMenuAtRestaurant> tblMenuAtRestaurant { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.tblRestaurants == null)
             {
                 return NotFound();
+            }
+
+
+            if (_context.tblMenus != null)
+            {
+                tblMenus = await _context.tblMenus.ToListAsync();
+            }
+            if (_context.tblMenuAtRestaurant != null)
+            {
+                tblMenuAtRestaurant = await _context.tblMenuAtRestaurant.ToListAsync();
             }
 
             var tblrestaurants = await _context.tblRestaurants.FirstOrDefaultAsync(m => m.ID == id);
@@ -38,6 +52,7 @@ namespace LTPR.Pages.Admin.Restaurants
                 tblRestaurants = tblrestaurants;
             }
             return Page();
+
         }
     }
 }

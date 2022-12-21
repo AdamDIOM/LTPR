@@ -17,6 +17,22 @@
             @Html.DisplayFor(model => model.tblMenus.Name)
         </dd>
     </dl>
+    <hr />
+    <h4>Items</h4>
+    <dl>
+        @foreach (var item in Model.tblMenuItem)
+        {
+            foreach (var iom in Model.tblItemOnMenu)
+            {
+                if (iom.MID == Model.tblMenus.ID && iom.IID == item.ID)
+                {
+                    <dt>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </dt>
+                }
+            }
+        }
+    </dl>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.tblMenus?.ID">Edit Menu</a> |

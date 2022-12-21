@@ -21,6 +21,8 @@ namespace LTPR.Pages.Admin.MenuAtRestaurant
 
         [BindProperty]
       public tblMenuAtRestaurant tblMenuAtRestaurant { get; set; }
+        public IList<tblRestaurants> tblRestaurants { get; set; } = default!;
+        public IList<tblMenus> tblMenus { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,7 +31,17 @@ namespace LTPR.Pages.Admin.MenuAtRestaurant
                 return NotFound();
             }
 
-            var tblmenuatrestaurant = await _context.tblMenuAtRestaurant.FirstOrDefaultAsync(m => m.KID == id);
+
+            if (_context.tblRestaurants != null)
+            {
+                tblRestaurants = await _context.tblRestaurants.ToListAsync();
+            }
+            if (_context.tblMenus != null)
+            {
+                tblMenus = await _context.tblMenus.ToListAsync();
+            }
+
+            var tblmenuatrestaurant = await _context.tblMenuAtRestaurant.FirstOrDefaultAsync(m => m.ID == id);
 
             if (tblmenuatrestaurant == null)
             {

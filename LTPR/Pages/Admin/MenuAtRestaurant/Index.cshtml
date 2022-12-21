@@ -2,42 +2,76 @@
 @model LTPR.Pages.Admin.MenuAtRestaurant.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Menu at Restaurants Index - Admin Data Editor";
 }
 
-<h1>Index</h1>
+<h1>Menu at Restaurants Index - Admin Data Editor</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Add Menu to Restaurant</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.tblMenuAtRestaurant[0].RID)
+                Restaurant Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tblMenuAtRestaurant[0].MID)
+                Menu Name
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.tblMenuAtRestaurant) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MID)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.KID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.KID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.KID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.tblMenuAtRestaurant) {
+            <tr>
+                <td>
+                    @{
+                        var foundId = -1;
+                        @for(int i = 0; i < Model.tblRestaurants.Count(); i++)
+                        {
+                            if(item.RID == Model.tblRestaurants[i].ID)
+                            {
+                                foundId = i;
+                            }
+                         }
+                        if (foundId == -1)
+                        {
+                            @Html.DisplayFor(modelItem => item.RID)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => Model.tblRestaurants[foundId].Name)
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        foundId = -1;
+                        @for (int i = 0; i < Model.tblMenus.Count(); i++)
+                        {
+                            if (item.MID == Model.tblMenus[i].ID)
+                            {
+                                foundId = i;
+                            }
+                        }
+                        if (foundId == -1)
+                        {
+                            @Html.DisplayFor(modelItem => item.MID)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => Model.tblMenus[foundId].Name)
+                        }
+                    }
+                </td>
+                <td>
+                    @*<a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |*@
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Remove Menu from Restaurant</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

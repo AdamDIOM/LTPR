@@ -35,7 +35,24 @@
             @Html.DisplayFor(model => model.tblRestaurants.Delivers)
         </dd>
     </dl>
+    <hr />
+    <h4>Menus</h4>
+    <dl>
+        @foreach(var menu in Model.tblMenus)
+        {
+            foreach(var mar in Model.tblMenuAtRestaurant)
+            {
+                if(mar.RID == Model.tblRestaurants.ID && mar.MID == menu.ID)
+                {
+                    <dt>
+                        @Html.DisplayFor(modelItem => menu.Name)
+                    </dt>
+                }
+            }
+        }
+    </dl>
 </div>
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.tblRestaurants?.ID">Edit Restaurant</a> |
     <a asp-page="./Index">Back to List</a>

@@ -12,6 +12,11 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="tblRestaurants.ID" class="control-label"></label>
+                <input asp-for="tblRestaurants.ID" class="form-control" readonly value="7" />
+                <span asp-validation-for="tblRestaurants.ID" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="tblRestaurants.Name" class="control-label"></label>
                 <input asp-for="tblRestaurants.Name" class="form-control" />

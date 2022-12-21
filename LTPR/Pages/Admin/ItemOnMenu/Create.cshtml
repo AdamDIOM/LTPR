@@ -2,29 +2,38 @@
 @model LTPR.Pages.Admin.ItemOnMenu.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Item on Menu Create - Admin Data Editor";
 }
 
-<h1>Create</h1>
+<h1>Add Item to Menu</h1>
 
-<h4>tblItemOnMenu</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="tblItemOnMenu.MID" class="control-label"></label>
-                <input asp-for="tblItemOnMenu.MID" class="form-control" />
+                <label asp-for="tblItemOnMenu.MID" class="control-label">Menu</label>
+                <select asp-for="tblItemOnMenu.MID" class="form-control">
+                    @foreach(var menu in Model.tblMenus)
+                    {
+                        <option value=@menu.ID>@menu.Name</option>
+                    }
+                </select>
                 <span asp-validation-for="tblItemOnMenu.MID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="tblItemOnMenu.IID" class="control-label"></label>
-                <input asp-for="tblItemOnMenu.IID" class="form-control" />
+                <label asp-for="tblItemOnMenu.IID" class="control-label">Item</label>
+                <select asp-for="tblItemOnMenu.IID" class="form-control">
+                    @foreach(var item in Model.tblMenuItem)
+                    {
+                        <option value=@item.ID>@item.Name</option>
+                    }
+                </select>
                 <span asp-validation-for="tblItemOnMenu.IID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
             </div>
         </form>
     </div>

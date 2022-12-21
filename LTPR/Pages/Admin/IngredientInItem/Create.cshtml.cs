@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using LTPR.Data;
 using LTPR.Models;
 
@@ -19,8 +20,24 @@ namespace LTPR.Pages.Admin.IngredientInItem
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IList<tblMenuItem> tblMenuItem { get; set; } = default!;
+        public IList<tblIngredients> tblIngredients { get; set; } = default!;
+        public IList<tblIngredientInItem> tblIII { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (_context.tblMenuItem != null)
+            {
+                tblMenuItem = await _context.tblMenuItem.ToListAsync();
+            }
+            if (_context.tblIngredients != null)
+            {
+                tblIngredients = await _context.tblIngredients.ToListAsync();
+            }
+            if (_context.tblIngredientInItem != null)
+            {
+                tblIII = await _context.tblIngredientInItem.ToListAsync();
+            }
             return Page();
         }
 
@@ -35,9 +52,12 @@ namespace LTPR.Pages.Admin.IngredientInItem
             {
                 return Page();
             }
-
+            try
+            {
             _context.tblIngredientInItem.Add(tblIngredientInItem);
             await _context.SaveChangesAsync();
+            }
+            catch { }
 
             return RedirectToPage("./Index");
         }

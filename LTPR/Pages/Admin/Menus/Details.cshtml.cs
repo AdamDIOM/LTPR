@@ -21,11 +21,23 @@ namespace LTPR.Pages.Admin.Menus
 
       public tblMenus tblMenus { get; set; }
 
+        public IList<tblMenuItem> tblMenuItem { get; set; } = default!;
+        public IList<tblItemOnMenu> tblItemOnMenu { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.tblMenus == null)
             {
                 return NotFound();
+            }
+
+            if (_context.tblMenuItem != null)
+            {
+                tblMenuItem = await _context.tblMenuItem.ToListAsync();
+            }
+            if (_context.tblItemOnMenu != null)
+            {
+                tblItemOnMenu = await _context.tblItemOnMenu.ToListAsync();
             }
 
             var tblmenus = await _context.tblMenus.FirstOrDefaultAsync(m => m.ID == id);
