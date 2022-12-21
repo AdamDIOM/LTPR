@@ -1,0 +1,43 @@
+﻿@page
+@model LTPR.Pages.Admin.MenuItem.CreateModel
+
+@{
+    ViewData["Title"] = "Menu Item Create - Admin Data Editor";
+}
+
+<h1>Create Menu Item</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="tblMenuItem.Name" class="control-label"></label>
+                <input asp-for="tblMenuItem.Name" class="form-control" />
+                <span asp-validation-for="tblMenuItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblMenuItem.Cost" class="control-label"></label>
+                <input asp-for="tblMenuItem.Cost" class="form-control" />
+                <span asp-validation-for="tblMenuItem.Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblMenuItem.Description" class="control-label"></label>
+                <input asp-for="tblMenuItem.Description" class="form-control" />
+                <span asp-validation-for="tblMenuItem.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create Menu Item" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

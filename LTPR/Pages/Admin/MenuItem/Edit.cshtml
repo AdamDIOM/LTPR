@@ -1,0 +1,44 @@
+﻿@page
+@model LTPR.Pages.Admin.MenuItem.EditModel
+
+@{
+    ViewData["Title"] = "Menu Item Edit - Admin Data Editor";
+}
+
+<h1>Edit Menu Item</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="tblMenuItem.ID" />
+            <div class="form-group">
+                <label asp-for="tblMenuItem.Name" class="control-label"></label>
+                <input asp-for="tblMenuItem.Name" class="form-control" />
+                <span asp-validation-for="tblMenuItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblMenuItem.Cost" class="control-label"></label>
+                <input asp-for="tblMenuItem.Cost" class="form-control" />
+                <span asp-validation-for="tblMenuItem.Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblMenuItem.Description" class="control-label"></label>
+                <input asp-for="tblMenuItem.Description" class="form-control" />
+                <span asp-validation-for="tblMenuItem.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

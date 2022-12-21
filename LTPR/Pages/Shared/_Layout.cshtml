@@ -33,17 +33,23 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Contatto">Contatto</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav flex-grow-1 ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top">
+        <!-- class="border-top footer text-muted">-->
         <div class="container">
             &copy; 2022 - Le Tre Profezie Ristoranti - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>

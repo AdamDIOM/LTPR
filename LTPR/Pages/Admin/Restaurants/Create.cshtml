@@ -1,0 +1,48 @@
+﻿@page
+@model LTPR.Pages.Admin.Restaurants.CreateModel
+
+@{
+    ViewData["Title"] = "Restaurants Create - Admin Data Editor";
+}
+
+<h1>Create Restaurant</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="tblRestaurants.Name" class="control-label"></label>
+                <input asp-for="tblRestaurants.Name" class="form-control" />
+                <span asp-validation-for="tblRestaurants.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblRestaurants.Address" class="control-label"></label>
+                <input asp-for="tblRestaurants.Address" class="form-control" />
+                <span asp-validation-for="tblRestaurants.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblRestaurants.PhoneNo" class="control-label"></label>
+                <input asp-for="tblRestaurants.PhoneNo" class="form-control" />
+                <span asp-validation-for="tblRestaurants.PhoneNo" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="tblRestaurants.Delivers" /> @Html.DisplayNameFor(model => model.tblRestaurants.Delivers)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create Restaurant" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -5,6 +5,8 @@ namespace LTPR.Models
 {
     public class tblIngredientInItem
     {
+        [Key]
+        public int KID { get; set; }
         [Required]
         public int MIID { get; set; }
         [Required]

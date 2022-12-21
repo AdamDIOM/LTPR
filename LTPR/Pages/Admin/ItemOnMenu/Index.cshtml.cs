@@ -7,26 +7,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using LTPR.Data;
 using LTPR.Models;
-using System.Data.SqlClient;
 
-namespace LTPR.Pages.Menus
+namespace LTPR.Pages.Admin.ItemOnMenu
 {
     public class IndexModel : PageModel
     {
-        private readonly LTPR.Data.LTPRContext _context;
+        private readonly LTPR.Data.Admin _context;
 
-        public IndexModel(LTPR.Data.LTPRContext context)
+        public IndexModel(LTPR.Data.Admin context)
         {
             _context = context;
         }
 
-        public IList<tblMenus> tblMenus { get;set; } = default!;
+        public IList<tblItemOnMenu> tblItemOnMenu { get;set; } = default!;
+
         public async Task OnGetAsync()
         {
-            if (_context.tblMenus != null)
+            if (_context.tblItemOnMenu != null)
             {
-                tblMenus = await _context.tblMenus.ToListAsync();
-
+                tblItemOnMenu = await _context.tblItemOnMenu.ToListAsync();
             }
         }
     }

@@ -5,6 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<Admin>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Admin") ?? throw new InvalidOperationException("Connection string 'Admin' not found.")));
 builder.Services.AddDbContext<LTPRContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LTPRContext") ?? throw new InvalidOperationException("Connection string 'LTPRContext' not found.")));
 

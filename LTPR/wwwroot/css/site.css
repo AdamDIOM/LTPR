@@ -7,18 +7,28 @@ html {
         font-size: 16px;
     }
 }
+/*
+html{
+    position:abslute;
+}*/
 
-html {
-    position: relative;
-    min-height: 100%;
+/*
+div{
+    display:block;
 }
-
+*/
 main {
-    min-height: 85vh;
+    min-height:87vh;
+    height:auto;
+    margin:0.5vh;
 }
 
 header {
     background-color: #ff8888;
+    height:7vh;
+}
+header nav{
+    height:100%;
 }
 
 footer {
@@ -26,19 +36,23 @@ footer {
     color: antiquewhite;
     height: 5vh;
     text-align: center;
-    padding: 10px
 }
 
     footer a {
         color: antiquewhite;
     }
+    
+/*div{
+    display:block;
+}*/
+
 
 .gallery-image {
     width: 100%;
 }
-
+/*
 .item{
     border:2px solid forestgreen;
     padding:2px;
     margin-bottom:5px;
-}
+}*/
