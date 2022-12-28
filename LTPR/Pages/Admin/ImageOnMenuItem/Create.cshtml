@@ -1,0 +1,59 @@
+﻿@page
+@model LTPR.Pages.Admin.ImageOnMenuItem.CreateModel
+
+@{
+    ViewData["Title"] = "Image on Menu Item Add - Admin Data Editor";
+}
+
+<h1>Add Image to Menu Item</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="tblImageOnMenuItem.MIID" class="control-label"></label>
+                <select asp-for="tblImageOnMenuItem.MIID" class="form-control">
+                    @foreach (var item in Model.tblMenuItem)
+                    {
+                        <option value=@item.ID>@item.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="tblImageOnMenuItem.MIID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblImageOnMenuItem.IID" class="control-label"></label>
+                @*<select asp-for="tblImageOnMenuItem.IID" class="form-control">*@
+                @foreach (var image in Model.tblImages) 
+                {
+                            @*<option value=@image.ID>@image.ImageDescription</option>*@
+                    <input type="radio" asp-for="tblImageOnMenuItem.IID" value="@image.ID" /> <br />
+                    @try
+                    {
+                        <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(image.ImageData))" alt="@image.ImageDescription" />
+                        
+                    }
+                    catch
+                    {
+                        <img class="img-thumb" src="/img/no-image.png" alt="no image available" />
+                    }
+                    <br />
+                }
+                @*</select>*@
+                <span asp-validation-for="tblImageOnMenuItem.IID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

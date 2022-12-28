@@ -1,0 +1,82 @@
+﻿@page
+@model LTPR.Pages.Admin.ImageOnMenuItem.IndexModel
+
+@{
+    ViewData["Title"] = "Image on Menu Item Index - Admin Data Editor";
+}
+
+<h1>Image on Menu Item Index - Admin Data Editor</h1>
+
+<p>
+    <a asp-page="Create">Add Image to Menu Item</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Menu Item
+            </th>
+            <th>
+                Image
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.tblImageOnMenuItem) {
+            <tr>
+                <td>
+                    @{
+                        var foundId = -1;
+                        @for (int i = 0; i < Model.tblMenuItem.Count(); i++)
+                        {
+                            if (item.MIID == Model.tblMenuItem[i].ID)
+                            {
+                                foundId = i;
+                            }
+                        }
+                        if (foundId == -1)
+                        {
+                            @Html.DisplayFor(modelItem => item.MIID)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        foundId = -1;
+                        @for (int i = 0; i < Model.tblImages.Count(); i++)
+                        {
+                            if (item.IID == Model.tblImages[i].ID)
+                            {
+                                foundId = i;
+                            }
+                        }
+                        if (foundId == -1)
+                        {
+                            @Html.DisplayFor(modelItem => item.IID)
+                        }
+                        else
+                        {
+                            @try
+                            {
+                                <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.tblImages[foundId].ImageData))" alt="@Model.tblImages[foundId].ImageDescription" />
+                            } catch
+                            {
+                                <img class="img-thumb" src="/img/no-image.png" alt="no image available" />
+                            }
+                        }
+                    }
+                </td>
+                <td>
+                    @*<a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                              <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |*@
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Remove Image from Menu Item</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

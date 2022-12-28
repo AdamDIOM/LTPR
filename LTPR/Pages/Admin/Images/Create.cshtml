@@ -1,0 +1,40 @@
+﻿@page
+@model LTPR.Pages.Admin.Images.CreateModel
+
+@{
+    ViewData["Title"] = "Images Upload - Admin Data Editor";
+}
+
+<h1>Upload Image</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label @*asp-for="tblImages.ImageData"*@ class="control-label">Image</label>
+                @*<input asp-for="tblImages.ImageData" class="form-control" />*@
+                <input type="file" id="file1" name="file1" multiple="multiple"asp-for="tblImages.ImageData" class="form-control"
+                />
+                @*<span asp-validation-for="tblImages.ImageData" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="tblImages.ImageDescription" class="control-label"></label>
+                <input asp-for="tblImages.ImageDescription" class="form-control" />
+                <span asp-validation-for="tblImages.ImageDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

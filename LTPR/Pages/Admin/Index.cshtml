@@ -1,7 +1,7 @@
 ﻿@page
 @model LTPR.Pages.Admin.IndexModel
 @{
-	ViewData["Title"] = "Contatto | Le Tre Profezie Ristoranti";
+	ViewData["Title"] = "Index - Admin Data Editor";
 }
 
 <h2>Admin: Edit Databases</h2>
@@ -11,9 +11,11 @@
 		<tr><td><a asp-page="Menus/Index">Menus</a></td></tr>
 		<tr><td><a asp-page="MenuItem/Index">Menu Items</a></td></tr>
 		<tr><td><a asp-page="Ingredients/Index">Ingredients</a></td></tr>
+		<tr><td><a asp-page="Images/Index">Images</a></td></tr>
 		<tr><td><h4>Link Tables</h4></td></tr>
 		<tr><td><a asp-page="MenuAtRestaurant/Index">Menus At Restaurants</a></td></tr>
 		<tr><td><a asp-page="ItemOnMenu/Index">Items On Menus</a></td></tr>
 		<tr><td><a asp-page="IngredientInItem/Index">Ingredients In Items</a></td></tr>
+		<tr><td><a asp-page="ImageOnMenuItem/Index">Image On Item</a></td></tr>
 	</tbody>
 </table>

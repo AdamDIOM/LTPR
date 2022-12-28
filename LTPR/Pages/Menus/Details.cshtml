@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id}"
 @model LTPR.Pages.Menus.DetailsModel
 
 @{
@@ -19,22 +19,36 @@
         @if(item.MID == Model.tblMenus.ID)
         {
             @*@item.IID*@
+                
+                var foundId = -1;
+                @for(int i = 0; i < Model.tblMenuItem.Count(); i++)
+                {
+                    if(item.IID == Model.tblMenuItem[i].ID)
+                    {
+                        foundId = i;
+                    }
+                }
+                if (foundId == -1)
+                {
+                    foundId = 0;
+                }
+                    
                 <div class="accordion-item">
                     <h2 class="accordion-header" id=@("heading" + item.IID)>
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + item.IID)>
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + @item.IID)>
                             <div class="row">
                                 <div class="col-6">
-                                    @Html.DisplayFor(modelItem => Model.tblMenuItem[item.IID].Name)
+                                    @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)
                                 </div>
                                 <div class="col-6">
-                                    @Html.DisplayFor(modelItem => Model.tblMenuItem[item.IID].Cost)
+                                    @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Cost)
                                 </div>
                             </div>
                         </button>
                     </h2>
-                    <div id=@("collapse" + item.IID) class="accordion-collapse collapse" aria-labelledby=@("heading" + item.IID) data-bs-parent="#accordion">
+                    <div id=@("collapse" + item.IID) class="accordion-collapse collapse" aria-labelledby=@("heading" + @item.IID) data-bs-parent="#accordion">
                         <div class="accordion-body">
-                            @Html.DisplayFor(modelItem => Model.tblMenuItem[item.IID].Description)     
+                            @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Description)     
                            <h5>Ingredients</h5>
 
                             <ul>
@@ -42,11 +56,51 @@
                             {
                                 @if(mitem.MIID == item.IID)
                                 {
-                                        <li>@Html.DisplayFor(model => Model.tblIngredients[mitem.IID].Name)</li>
                                     
+                                        foundId = -1;
+                                        @for(int i = 0; i < Model.tblIngredients.Count(); i++)
+                                        {
+                                            if(mitem.IID == Model.tblIngredients[i].ID)
+                                            {
+                                                foundId = i;
+                                            }
+                                         }
+                                        if (foundId == -1)
+                                        {
+                                            <li>@Html.DisplayFor(modelItem => mitem.IID)</li>
+                                        }
+                                        else
+                                        {
+                                            <li>@Html.DisplayFor(modelItem => Model.tblIngredients[foundId].Name)</li>
+                                        }                        
                                 }
                             }
                             </ul>
+                            @foreach(var mitem in Model.tblImageOnMenuItem)
+                            {
+                                @if(mitem.MIID == item.IID)
+                                {
+                                    
+                                        foundId = -1;
+                                        @for(int i = 0; i < Model.tblImages.Count(); i++)
+                                        {
+                                            if(mitem.IID == Model.tblImages[i].ID)
+                                            {
+                                                foundId = i;
+                                            }
+                                         }
+                                        if (foundId == -1)
+                                        {
+                                            @Html.DisplayFor(modelItem => mitem.IID)
+                                        }
+                                        else
+                                        {
+                                            <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.tblImages[foundId].ImageData))" alt="@Model.tblImages[foundId].ImageDescription" />
+                                            @*@Html.DisplayFor(modelItem => Model.tblImages[foundId].ImageDescription)
+                                                                <br />*@
+                                        }                        
+                                }
+                            }
                         </div>
                     </div>
                 </div>
@@ -62,8 +116,15 @@
     }
 
     </div>
-    </div>
+</div>
 <div>
+    <form>@* method="post">*@
+        <div>
+            Search
+            <input asp-for="qry" />
+        </div>
+        <button type="submit" asp-route-qry="@Model.qry">Search</button>
+    </form>
     @*<a asp-page="./Edit" asp-route-id="@Model.tblMenus?.ID">Edit</a> |*@
     <a asp-page="./Index">Back to Menus</a>
 </div>

@@ -25,6 +25,9 @@ namespace LTPR.Pages.Admin.MenuItem
         public IList<tblIngredients> tblIngredients { get; set; } = default!;
         public IList<tblIngredientInItem> tblIngredientInItem { get; set; } = default!;
 
+        public IList<tblImages> tblImages { get; set; } = default!;
+        public IList<tblImageOnMenuItem> tblImageOnMenuItem { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.tblMenuItem == null)
@@ -39,6 +42,15 @@ namespace LTPR.Pages.Admin.MenuItem
             if (_context.tblIngredientInItem != null)
             {
                 tblIngredientInItem = await _context.tblIngredientInItem.ToListAsync();
+            }
+
+            if (_context.tblImages != null)
+            {
+                tblImages = await _context.tblImages.ToListAsync();
+            }
+            if (_context.tblImageOnMenuItem != null)
+            {
+                tblImageOnMenuItem = await _context.tblImageOnMenuItem.ToListAsync();
             }
 
             var tblmenuitem = await _context.tblMenuItem.FirstOrDefaultAsync(m => m.ID == id);

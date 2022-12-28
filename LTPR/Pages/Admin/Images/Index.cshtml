@@ -1,0 +1,53 @@
+﻿@page
+@model LTPR.Pages.Admin.Images.IndexModel
+
+@{
+    ViewData["Title"] = "Images Index - Admin Data Editor";
+}
+
+<h1>Images Index - Admin Data Editor</h1>
+
+<p>
+    <a asp-page="Create">Upload New Image</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tblImages[0].ImageDescription)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.tblImages) {
+            <tr>
+                <td>
+                    @try
+                    {
+                        <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ImageData))" alt="@item.ImageDescription" />
+                    } catch
+                    {
+                        <img class="img-thumb" src="/img/no-image.png" alt="no image available" />
+                    }
+                    @*@Html.DisplayFor(modelItem => item.ImageData)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageDescription)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="../Index">Back to List</a>
+</div>

@@ -14,6 +14,8 @@ namespace LTPR.Data
         {
         }
 
+        public DbSet<tblImageOnMenuItem> tblImageOnMenuItem { get; set; }
+        public DbSet<tblImages> tblImages { get; set; }
         public DbSet<tblIngredientInItem> tblIngredientInItem { get; set; }
         public DbSet<tblIngredients> tblIngredient { get; set; }
         public DbSet<tblItemOnMenu> tblItemOnMenu { get; set; }
@@ -24,6 +26,10 @@ namespace LTPR.Data
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
+            modelbuilder.Entity<tblImageOnMenuItem>().ToTable("tblImageOnMenuItem")
+                .HasKey(e => new { e.IID, e.MIID })
+                .HasName("PK_ImageOnMenuItem");
+            modelbuilder.Entity<tblImages>().ToTable("tblImages");
             modelbuilder.Entity<tblIngredientInItem>().ToTable("tblIngredientInItem")
                 .HasKey(e => new {e.IID, e.MIID})
                 .HasName("PK_IngredientInItem");

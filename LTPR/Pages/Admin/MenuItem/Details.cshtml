@@ -45,6 +45,29 @@
             }
         }
     </dl>
+    <hr />
+    <h4>Images</h4>
+    <dl>
+        @foreach (var image in Model.tblImages)
+        {
+            foreach (var iomi in Model.tblImageOnMenuItem)
+            {
+                if (iomi.MIID == Model.tblMenuItem.ID && iomi.IID == image.ID)
+                {
+                    @*<dt>*@
+                        @try
+                        {
+                            <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(image.ImageData))" alt="@image.ImageDescription" />
+                        }
+                        catch
+                        {
+                            <img class="img-thumb" src="/img/no-image.png" alt="no image available" />
+                        }
+                    @*</dt>*@
+                }
+            }
+        }
+    </dl>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.tblMenuItem?.ID">Edit Menu Item</a> |

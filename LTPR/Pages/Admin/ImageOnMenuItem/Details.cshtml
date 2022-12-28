@@ -1,0 +1,31 @@
+﻿@page
+@model LTPR.Pages.Admin.ImageOnMenuItem.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>tblImageOnMenuItem</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.tblImageOnMenuItem.MIID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.tblImageOnMenuItem.MIID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.tblImageOnMenuItem.IID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.tblImageOnMenuItem.IID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.tblImageOnMenuItem?.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

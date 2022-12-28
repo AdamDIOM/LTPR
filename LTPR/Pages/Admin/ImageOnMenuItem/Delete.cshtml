@@ -1,11 +1,11 @@
 ﻿@page
-@model LTPR.Pages.Admin.IngredientInItem.DeleteModel
+@model LTPR.Pages.Admin.ImageOnMenuItem.DeleteModel
 
 @{
-    ViewData["Title"] = "Ingredient in Menu Item Delete - Admin Data Editor";
+    ViewData["Title"] = "Image on Menu Item Delete - Admin Data Editor";
 }
 
-<h1>Remove Ingredient from Menu Item</h1>
+<h1>Remove Image from Menu Item</h1>
 
 <h3>Are you sure you want to remove this?</h3>
 <div>
@@ -19,14 +19,14 @@
                 var foundId = -1;
                 @for (int i = 0; i < Model.tblMenuItem.Count(); i++)
                 {
-                    if (Model.tblIngredientInItem.MIID == Model.tblMenuItem[i].ID)
+                    if (Model.tblImageOnMenuItem.MIID == Model.tblMenuItem[i].ID)
                     {
                         foundId = i;
                     }
                 }
                 if (foundId == -1)
                 {
-                    @Html.DisplayFor(modelItem => Model.tblIngredientInItem.MIID)
+                    @Html.DisplayFor(modelItem => Model.tblImageOnMenuItem.MIID)
                 }
                 else
                 {
@@ -35,32 +35,39 @@
             }
         </dd>
         <dt class="col-sm-2">
-            Ingredient
+            Image
         </dt>
         <dd class="col-sm-10">
             @{
                 foundId = -1;
-                @for (int i = 0; i < Model.tblIngredients.Count(); i++)
+                @for (int i = 0; i < Model.tblImages.Count(); i++)
                 {
-                    if (Model.tblIngredientInItem.IID == Model.tblIngredients[i].ID)
+                    if (Model.tblImageOnMenuItem.IID == Model.tblImages[i].ID)
                     {
                         foundId = i;
                     }
                 }
                 if (foundId == -1)
                 {
-                    @Html.DisplayFor(modelItem => Model.tblIngredientInItem.IID)
+                    @Html.DisplayFor(modelItem => Model.tblImageOnMenuItem.IID)
                 }
                 else
                 {
-                    @Html.DisplayFor(modelItem => Model.tblIngredients[foundId].Name)
+                    @try
+                    {
+                        <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.tblImages[foundId].ImageData))" alt="@Model.tblImages[foundId].ImageDescription" />
+                    }
+                    catch
+                    {
+                        <img class="img-thumb" src="/img/no-image.png" alt="no image available" />
+                    }
                 }
             }
         </dd>
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="tblIngredientInItem.ID" />
+        <input type="hidden" asp-for="tblImageOnMenuItem.ID" />
         <input type="submit" value="Remove" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

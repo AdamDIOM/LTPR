@@ -21,6 +21,8 @@ namespace LTPR.Data
 		public DbSet<LTPR.Models.tblMenuItem> tblMenuItem { get; set; } = default!;
 		public DbSet<LTPR.Models.tblMenus> tblMenus { get; set; } = default!;
 		public DbSet<LTPR.Models.tblRestaurants> tblRestaurants { get; set; } = default!;
+		public DbSet<LTPR.Models.tblImages> tblImages { get; set; }
+		public DbSet<LTPR.Models.tblImageOnMenuItem> tblImageOnMenuItem { get; set; }
 
 	}
 }
