@@ -6,8 +6,8 @@ namespace LTPR.Models
     {
         [Key]
         public int ID { get; set; }
-        [Required]
         public byte[] ImageData { get; set; }
+        [StringLength(250), MinLength(10)]
         [Required]
         public string ImageDescription { get; set; }
     }

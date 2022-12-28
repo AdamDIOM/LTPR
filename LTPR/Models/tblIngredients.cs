@@ -6,7 +6,7 @@ namespace LTPR.Models
     {
         [Key]
         public int ID { get; set; }
-        [Required, StringLength(25)]
+        [Required, StringLength(50)]
         public string Name { get; set; }
     }
 }

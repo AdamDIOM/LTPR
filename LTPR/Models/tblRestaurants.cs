@@ -7,9 +7,9 @@ namespace LTPR.Models
     {
         [Key]
         public int ID { get; set; }
-        [Required, StringLength(25)]
+        [Required, StringLength(25), MinLength(3)]
         public string Name { get; set; }
-        [Required, StringLength(75)]
+        [Required, StringLength(75), MinLength(5)]
         public string Address { get; set; }
         [Required, StringLength(13)]
         public string PhoneNo { get; set; }
