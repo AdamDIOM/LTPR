@@ -12,9 +12,9 @@ namespace LTPR.Pages.Menus
 {
     public class CreateModel : PageModel
     {
-        private readonly LTPR.Data.LTPRContext _context;
+        private readonly LTPR.Data.Admin _context;
 
-        public CreateModel(LTPR.Data.LTPRContext context)
+        public CreateModel(LTPR.Data.Admin context)
         {
             _context = context;
         }

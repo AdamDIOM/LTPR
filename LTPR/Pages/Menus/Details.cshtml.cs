@@ -13,9 +13,9 @@ namespace LTPR.Pages.Menus
 {
     public class DetailsModel : PageModel
     {
-        private readonly LTPR.Data.LTPRContext _context;
+        private readonly LTPR.Data.Admin _context;
 
-        public DetailsModel(LTPR.Data.LTPRContext context)
+        public DetailsModel(LTPR.Data.Admin context)
         {
             _context = context;
         }
@@ -59,9 +59,9 @@ namespace LTPR.Pages.Menus
                 tblIngredientInItem = await _context.tblIngredientInItem.ToListAsync();
             }
 
-            if (_context.tblIngredient != null)
+            if (_context.tblIngredients != null)
             {
-                tblIngredients = await _context.tblIngredient.ToListAsync();
+                tblIngredients = await _context.tblIngredients.ToListAsync();
             }
 
             if (_context.tblImageOnMenuItem != null)

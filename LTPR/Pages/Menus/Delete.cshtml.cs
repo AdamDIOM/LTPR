@@ -12,9 +12,9 @@ namespace LTPR.Pages.Menus
 {
     public class DeleteModel : PageModel
     {
-        private readonly LTPR.Data.LTPRContext _context;
+        private readonly LTPR.Data.Admin _context;
 
-        public DeleteModel(LTPR.Data.LTPRContext context)
+        public DeleteModel(LTPR.Data.Admin context)
         {
             _context = context;
         }

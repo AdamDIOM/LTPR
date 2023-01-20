@@ -3,9 +3,20 @@
 @{
     ViewData["Title"] = "Casa | Le Tre Profezie Ristoranti";
 }
+@using Microsoft.AspNetCore.Identity;
+@using LTPR.Data;
+@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> UserManager;
 
 <div class="text-center">
-    <h1 class="display-4">Ciao World</h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1 class="display-4">Ciao, @UserManager.GetUserName(User)</h1>
+    }
+    else
+    {
+        <h1 class="display-4">Ciao</h1>
+    }
     
     <div class="row gallery">
         

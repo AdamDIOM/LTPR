@@ -33,10 +33,33 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Contatto">Contatto</a>
                         </li>
                     </ul>
+                    @using Microsoft.AspNetCore.Identity;
+                    @using LTPR.Data;
+                    @inject SignInManager<ApplicationUser> SignInManager;
+                    @inject UserManager<ApplicationUser> UserManager;
+                    
                     <ul class="navbar-nav flex-grow-1 ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <form asp-page="/Account/Logout" method="post"><button class="logout-button nav-link text-dark btn btn-link" type="submit">Logout</button></form>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Profile">Profile</a>
+                            </li>
+                            if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin"))
+                            {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
+                            </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Index">Login / Register</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -54,7 +77,9 @@
             @*&copy; 2022 - Le Tre Profezie Ristoranti - <a asp-area="" asp-page="/Privacy">Privacy</a>*@
             <a href="http://validator.w3.org/check?uri=referer">Validate HTML</a>
             <a href="http://jigsaw.w3.org/css-validator/check/referer">Validate CSS</a>
-            <a asp-page="/Admin/Index">Admin</a>
+            @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")){
+                <a asp-page="/Admin/Index">Admin</a>
+            }
 
         </div>
     </footer>

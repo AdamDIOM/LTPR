@@ -1,15 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using LTPR.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+	options.Conventions.AuthorizeFolder("/Admin", "Admin");
+});
+
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("Admin", policy =>
+	{
+		policy.RequireRole("Admin");
+	});
+});
 
 builder.Services.AddDbContext<Admin>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Admin") ?? throw new InvalidOperationException("Connection string 'Admin' not found.")));
-builder.Services.AddDbContext<LTPRContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LTPRContext") ?? throw new InvalidOperationException("Connection string 'LTPRContext' not found.")));
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+	.AddEntityFrameworkStores<Admin>()
+	.AddDefaultTokenProviders();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -31,7 +45,7 @@ using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
 
-	var context = services.GetRequiredService<LTPRContext>();
+	var context = services.GetRequiredService<Admin>();
 	context.Database.EnsureCreated();
 }
 
@@ -39,6 +53,8 @@ using (var scope = app.Services.CreateScope())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

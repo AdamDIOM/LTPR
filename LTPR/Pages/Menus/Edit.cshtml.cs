@@ -13,9 +13,9 @@ namespace LTPR.Pages.Menus
 {
     public class EditModel : PageModel
     {
-        private readonly LTPR.Data.LTPRContext _context;
+        private readonly LTPR.Data.Admin _context;
 
-        public EditModel(LTPR.Data.LTPRContext context)
+        public EditModel(LTPR.Data.Admin context)
         {
             _context = context;
         }

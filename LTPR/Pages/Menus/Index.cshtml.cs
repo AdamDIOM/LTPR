@@ -13,9 +13,9 @@ namespace LTPR.Pages.Menus
 {
     public class IndexModel : PageModel
     {
-        private readonly LTPR.Data.LTPRContext _context;
+        private readonly LTPR.Data.Admin _context;
 
-        public IndexModel(LTPR.Data.LTPRContext context)
+        public IndexModel(LTPR.Data.Admin context)
         {
             _context = context;
         }
