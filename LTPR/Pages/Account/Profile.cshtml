@@ -15,6 +15,46 @@
                     @Model.userName
                 </dd>
             </dl>
-        </div>
+            <form method="post">
+            <dl class="row">
+                <dt class="col-sm-5">
+                    Current Password
+                </dt>
+                <dd class="col-sm-7">
+                    <div class="form-group">
+                        <label asp-for="CurrentPassword" class="control-label"></label>
+                        <input asp-for="CurrentPassword" class="form-control" />
+                    </div>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-5">
+                    New Password
+                </dt>
+                <dd class="col-sm-7">
+                    <div class="form-group">
+                        <label asp-for="RegInput.Password" class="control-label"></label>
+                        <input asp-for="RegInput.Password" class="form-control" />
+                        <span asp-validation-for="RegInput.Password" class="text-danger"></span>
+                    </div>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-5">
+                    Confirm Password
+                </dt>
+                <dd class="col-sm-7">
+                    <div class="form-group">
+                        <label asp-for="RegInput.ConfirmPassword" class="control-label"></label>
+                        <input asp-for="RegInput.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="RegInput.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </dd>
+            </dl>
+        <input type="submit" value="Change" class="btn btn-danger" />
+        </form>
+
+
+    </div>
     <div class="col-md-3"></div>
 </div>

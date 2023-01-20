@@ -1,0 +1,40 @@
+﻿@page
+@model LTPR.Pages.Admin.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Ingredients Index - Admin Data Editor";
+}
+
+<h1>Ingredients Index - Admin Data Editor</h1>
+
+<p>
+    <a asp-page="Create">Create New Ingredient</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                UserName
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var user in Model.users) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => user.UserName)
+            </td>
+            <td>
+                @*<a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |*@
+                <a asp-page="./ChangePassword" asp-route-UserName="@user.UserName">Change Password</a> |
+                <a asp-page="./Delete" asp-route-UserName="@user.UserName">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="../Index">Back to List</a>
+</div>
