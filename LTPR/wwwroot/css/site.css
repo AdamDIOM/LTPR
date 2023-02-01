@@ -72,3 +72,7 @@ footer {
 .logout-button{
     padding:7px;
 }
+
+.accordion-item .row{
+    width:100%;
+}

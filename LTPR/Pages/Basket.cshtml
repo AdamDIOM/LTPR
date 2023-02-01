@@ -1,0 +1,125 @@
+﻿@page
+@model LTPR.Pages.BasketModel
+@{
+    ViewData["Title"] = "Basket";
+}
+<h1>Basket</h1>
+
+<div class="row">
+    <div class="col-4">Menu Item</div>
+    <div class="col-3">Menu</div>
+    <div class="col-2">Price</div>
+    <div class="col-1">Quantity</div>
+    <div class="col-2">Total Price</div>
+</div>
+<form method="post">
+    @{
+        var items = 0;
+        decimal totalSum = 0;
+        foreach (var item in Model.tblBasket)
+        {
+
+        <div class="row">
+            @if(item.UID == Model.user.Id)
+            {
+                items++;
+                <div class="col-4">
+                    @{
+                        var foundId = -1;
+                        @for (int i = 0; i < Model.tblMenuItem.Count(); i++)
+                        {
+                            if (item.IID == Model.tblMenuItem[i].ID)
+                            {
+                                foundId = i;
+                            }
+                        }
+                        if (foundId == -1)
+                        {
+                            @Html.DisplayFor(modelItem => item.IID)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)
+                        }
+                    }
+                </div>
+                <div class="col-3">
+                @{
+                    foundId = -1;
+                    @for (int i = 0; i < Model.tblMenus.Count(); i++)
+                    {
+                        if (item.MID == Model.tblMenus[i].ID)
+                        {
+                            foundId = i;
+                        }
+                    }
+                    if (foundId == -1)
+                    {
+                        @Html.DisplayFor(modelItem => item.MID)
+                    }
+                    else
+                    {
+                                @Html.DisplayFor(modelItem => Model.tblMenus[foundId].Name)
+                            }
+                        }
+                    </div>
+                decimal cost = 0;
+                <div class="col-2">
+                    @{
+                        foundId = -1;
+                        for(int i = 0; i < Model.tblItemOnMenu.Count(); i++)
+                        {
+                            if(item.MID == Model.tblItemOnMenu[i].MID && item.IID == Model.tblItemOnMenu[i].IID)
+                            {
+                                foundId = i;
+                            }
+                        }
+                        if (foundId == -1)
+                        {
+                            @Html.DisplayFor(modelItem => item.MID + " " + item.IID)
+                        }
+                        else
+                        {
+                                <span>£@Html.DisplayFor(modelItem => Model.tblItemOnMenu[foundId].Cost)</span>
+                                cost = Model.tblItemOnMenu[foundId].Cost;
+                            }
+                    }
+                </div>
+                <div class="col-1">
+                    @*
+                    need [-] number [+]
+                    *@
+                    <button asp-page-handler="QtyMinus" asp-route-id="@item.ID">-</button>
+                        @Html.DisplayFor(modelItem => item.Qty)
+                        <button asp-page-handler="QtyPlus" asp-route-id="@item.ID">+</button>
+                </div>
+                <div class="col-2">
+
+                        <span>£@Math.Round((cost * item.Qty), 2)</span>
+                        @{totalSum += (cost * item.Qty);}
+                </div>
+            }
+            
+        </div>
+    }
+        
+    @if(items < 1)
+    {
+        <h2>The basket is empty.</h2>
+        <a asp-page="/Menus/Index" class="btn">View the Menus</a>
+    }
+    else{
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-2">Total Cost</div>
+            <div class="col-2">£@Math.Round(totalSum, 2)</div>
+        </div>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <button>Pay - insert stripe functionality here</button>
+            </div>
+        </div>
+    }
+}
+</form>

@@ -16,6 +16,7 @@
     <div class="accordion accordion-flush" id="accordion">
     @foreach (var item in Model.tblItemOnMenu)
     {
+        <form method="post">
         @if(item.MID == Model.tblMenus.ID)
         {
             @*@item.IID*@
@@ -35,21 +36,30 @@
                     
                 <div class="accordion-item">
                     <h2 class="accordion-header" id=@("heading" + item.IID)>
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + @item.IID)>
+                        <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + @item.IID)>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-4">
                                     @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     @*@Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Cost)*@
                                     @Html.DisplayFor(modelItem => item.Cost)
                                 </div>
+                                <div class="col-3">
+                                        @if (Model.signInManager.IsSignedIn(User))
+                                        {
+                                            <button class="btn btn-green" asp-page-handler="Basket" asp-route-iid="@item.IID">Add to Basket</button>
+                                        }
+                                        
+                                </div>
+                                
                             </div>
-                        </button>
+                        </div>
                     </h2>
                     <div id=@("collapse" + item.IID) class="accordion-collapse collapse" aria-labelledby=@("heading" + @item.IID) data-bs-parent="#accordion">
                         <div class="accordion-body">
-                            @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Description)     
+                            @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Description)
+
                            <h5>Ingredients</h5>
 
                             <ul>
@@ -112,7 +122,7 @@
                 </div>
           
         }
-            
+            </form>
             
     }
 

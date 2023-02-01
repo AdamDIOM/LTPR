@@ -25,10 +25,12 @@ namespace LTPR.Data
 		public DbSet<LTPR.Models.tblRestaurants> tblRestaurants { get; set; } = default!;
 		public DbSet<LTPR.Models.tblImages> tblImages { get; set; }
 		public DbSet<LTPR.Models.tblImageOnMenuItem> tblImageOnMenuItem { get; set; }
+        public DbSet<LTPR.Models.tblBasket> tblBasket { get; set; } = default!;
 
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
+            modelbuilder.Entity<tblBasket>().ToTable("tblBasket");
             modelbuilder.Entity<tblImageOnMenuItem>().ToTable("tblImageOnMenuItem")
                 .HasKey(e => new { e.IID, e.MIID })
                 .HasName("PK_ImageOnMenuItem");

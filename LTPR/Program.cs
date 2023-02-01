@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages(options =>
 {
 	options.Conventions.AuthorizeFolder("/Admin", "Admin");
+	//options.Conventions.AuthorizePage("/Basket");
 });
 
 builder.Services.AddAuthorization(options =>

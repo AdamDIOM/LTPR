@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LTPR.Data;
 using LTPR.Models;
 using NuGet.Packaging;
+using Microsoft.AspNetCore.Identity;
 
 namespace LTPR.Pages.Menus
 {
@@ -15,10 +16,15 @@ namespace LTPR.Pages.Menus
     {
         private readonly LTPR.Data.Admin _context;
 
-        public DetailsModel(LTPR.Data.Admin context)
+        public DetailsModel(LTPR.Data.Admin context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            this.signInManager = signInManager;
         }
+
+        private readonly UserManager<ApplicationUser> _userManager;
+        public SignInManager<ApplicationUser> signInManager;
 
       public tblMenus tblMenus { get; set; }
         public IList<tblItemOnMenu> tblItemOnMenu { get; set; } = default!;
@@ -29,6 +35,8 @@ namespace LTPR.Pages.Menus
 
         public IList<tblImageOnMenuItem> tblImageOnMenuItem { get; set; } = default!;
         public IList<tblImages> tblImages { get; set; } = default!;
+
+        public IList<tblBasket> tblBasket { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -72,6 +80,10 @@ namespace LTPR.Pages.Menus
             {
                 tblImages = await _context.tblImages.ToListAsync();
             }
+            if (_context.tblBasket != null)
+            {
+                tblBasket = await _context.tblBasket.ToListAsync();
+            }
 
             var tblmenus = await _context.tblMenus.FirstOrDefaultAsync(m => m.ID == id);
             if (tblmenus == null)
@@ -86,8 +98,47 @@ namespace LTPR.Pages.Menus
             return Page();
         }
 
+        public async Task<IActionResult> OnPostBasketAsync(int? id, int? iid)
+        {
+            if (id == null || iid == null)
+            {
+                return NotFound();
+            }
+            
+            var user = await _userManager.GetUserAsync(User);
+            //need to add check for item in basket
+            var f = false;
+            foreach(var item in _context.tblBasket)
+            {
+                if(item.UID == user.Id && item.IID == (int)iid && item.MID == (int)id)
+                {
+                    var i = await _context.tblBasket.FirstOrDefaultAsync(m => m.ID == item.ID);
+                    i.Qty++;
+                    _context.Attach(i).State = EntityState.Modified;
+                    f = true;
+                    break;
+                }
+            }
+            if (!f)
+            {
+                _context.tblBasket.Add(new Models.tblBasket
+                {
+                    UID = user.Id, // get logged on user
+                    IID = (int)iid, //get item from button
+                    MID = (int)id, //get from details id
+                    Qty = 1 //check if item already in basket
+                });
+            }
+            
+            await _context.SaveChangesAsync();
+            return RedirectToPage();
+        }
+
         [BindProperty(SupportsGet = true)]
         public string qry { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int iid { get; set; }
 
         /*public async Task<IActionResult> OnPostSearchAsync(int? id)
         {
