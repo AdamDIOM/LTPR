@@ -1,0 +1,21 @@
+﻿@page
+@model LTPR.Pages.Purchase.PayModel
+@{
+}
+
+@using LTPR.Data
+@using Microsoft.Extensions.Options
+@using Stripe
+@inject IOptions<StripeSettings> Stripe
+@Model.amount
+<form asp-page-handler="Charge" asp-route-amount="@Model.amount" method="post">
+    <script src="https://checkout.stripe.com/checkout.js"
+            class="stripe-button"
+            data-key="pk_test_51MWpm1FGPmD5MphGi2Ue0s4hQniUQQqvcYYS9FoJOpPQdJcJuY5EC0qD19ZATRkskOjhGe0y7m0nPMEXRpqSxP04009PjL1oN5"
+            data-locale="auto"
+            data-name="LTPR"
+            data-description="LTPR Orders"
+            data-amount="@Model.amount"
+            data-currency="GBP">
+    </script>
+</form>

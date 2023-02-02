@@ -26,10 +26,14 @@ namespace LTPR.Data
 		public DbSet<LTPR.Models.tblImages> tblImages { get; set; }
 		public DbSet<LTPR.Models.tblImageOnMenuItem> tblImageOnMenuItem { get; set; }
         public DbSet<LTPR.Models.tblBasket> tblBasket { get; set; } = default!;
+        public DbSet<LTPR.Models.tblSales> tblSales { get; set; } = default!;
+        public DbSet<LTPR.Models.tblItemsOnSale> tblItemsOnSale { get; set; } = default!;
 
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
+            modelbuilder.Entity<tblItemsOnSale>().ToTable("tblItemsOnSale");
+            modelbuilder.Entity<tblSales>().ToTable("tblSales");
             modelbuilder.Entity<tblBasket>().ToTable("tblBasket");
             modelbuilder.Entity<tblImageOnMenuItem>().ToTable("tblImageOnMenuItem")
                 .HasKey(e => new { e.IID, e.MIID })

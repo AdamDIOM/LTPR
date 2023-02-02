@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.ObjectPool;
 
-namespace LTPR.Pages
+namespace LTPR.Pages.Purchase
 {
     public class BasketModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;
         private readonly UserManager<ApplicationUser> _userManager;
+
+        [BindProperty(SupportsGet = true)]
+        public decimal totalSum { get; set; }
 
         [BindProperty(SupportsGet =true)]
         public int id { get; set; }
@@ -103,6 +106,14 @@ namespace LTPR.Pages
                 }
                 return NotFound();
             }
+        }
+
+        
+
+
+        public async Task<IActionResult> OnPostChargeAsync(decimal totalSum, string id)
+        {
+            return Redirect("Pay?amount=" + Math.Round(totalSum*100) + "&id=" + id);
         }
     }
 }

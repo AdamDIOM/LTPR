@@ -2,14 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using LTPR.Data;
+using Stripe;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages(options =>
 {
 	options.Conventions.AuthorizeFolder("/Admin", "Admin");
-	//options.Conventions.AuthorizePage("/Basket");
+	//options.Conventions.AuthorizeFolder("/Purchase");
 });
+
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 builder.Services.AddAuthorization(options =>
 {
