@@ -35,20 +35,20 @@ namespace LTPR.Data
             modelbuilder.Entity<tblItemsOnSale>().ToTable("tblItemsOnSale");
             modelbuilder.Entity<tblSales>().ToTable("tblSales");
             modelbuilder.Entity<tblBasket>().ToTable("tblBasket");
-            modelbuilder.Entity<tblImageOnMenuItem>().ToTable("tblImageOnMenuItem")
-                .HasKey(e => new { e.IID, e.MIID })
-                .HasName("PK_ImageOnMenuItem");
+            modelbuilder.Entity<tblImageOnMenuItem>().ToTable("tblImageOnMenuItem");
+                //.HasKey(e => new { e.IID, e.MIID })
+                //.HasName("PK_ImageOnMenuItem");
             modelbuilder.Entity<tblImages>().ToTable("tblImages");
-            modelbuilder.Entity<tblIngredientInItem>().ToTable("tblIngredientInItem")
-                .HasKey(e => new { e.IID, e.MIID })
-                .HasName("PK_IngredientInItem");
+            modelbuilder.Entity<tblIngredientInItem>().ToTable("tblIngredientInItem");
+                //.HasKey(e => new { e.IID, e.MIID })
+                //.HasName("PK_IngredientInItem");
             modelbuilder.Entity<tblIngredients>().ToTable("tblIngredients");
-            modelbuilder.Entity<tblItemOnMenu>().ToTable("tblItemOnMenu")
-                .HasKey(e => new { e.MID, e.IID })
-                .HasName("PK_ItemOnMenu");
-            modelbuilder.Entity<tblMenuAtRestaurant>().ToTable("tblMenuAtRestaurant")
-                .HasKey(e => new { e.RID, e.MID })
-                .HasName("PK_MenuAtRestaurant");
+            modelbuilder.Entity<tblItemOnMenu>().ToTable("tblItemOnMenu");
+            //.HasKey(e => new { e.MID, e.IID })
+            //.HasName("PK_ItemOnMenu");
+            modelbuilder.Entity<tblMenuAtRestaurant>().ToTable("tblMenuAtRestaurant");
+                //.HasKey(e => new { e.RID, e.MID })
+                //.HasName("PK_MenuAtRestaurant");
             modelbuilder.Entity<tblMenuItem>().ToTable("tblMenuItem");
             modelbuilder.Entity<tblMenus>().ToTable("tblMenus");
             modelbuilder.Entity<tblRestaurants>().ToTable("tblRestaurants");

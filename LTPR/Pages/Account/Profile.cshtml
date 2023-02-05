@@ -54,7 +54,37 @@
         <input type="submit" value="Change" class="btn btn-danger" />
         </form>
 
+        <div>
+            <h1>Past Orders</h1>
+            @{
+                var uid = Model.userManager.GetUserId(User);
+                foreach(var sale in Model.tblSales)
+                {
+                    decimal cost = 0;
+                    if(sale.UID == uid)
+                    {
+                        <h3>Sale ID: @sale.ID | Date: @sale.OrderTime</h3>
+                        foreach(var item in Model.tblItemsOnSale)
+                        {
+                            if(item.SID == sale.ID)
+                            {
+                                foreach(var menuitem in Model.tblMenuItem)
+                                {
+                                    if(item.IID == menuitem.ID)
+                                    {
+                                        <p>@menuitem.Name | £@item.Cost.ToString("0.00")</p>
+                                        cost += item.Cost;
+                                        break;
+                                    }
+                                }
 
+                            }
+                        }
+                        <b>Total cost: £@cost.ToString("0.00")</b>
+                    }
+                }
+            }
+        </div>
     </div>
     <div class="col-md-3"></div>
 </div>

@@ -11,6 +11,8 @@ namespace LTPR.Models
         public string Name { get; set; }
         [Required, StringLength(75), MinLength(5)]
         public string Address { get; set; }
+        [Required]
+        public string LangLat { get; set; }
         [Required, StringLength(13)]
         public string PhoneNo { get; set; }
         [Required]

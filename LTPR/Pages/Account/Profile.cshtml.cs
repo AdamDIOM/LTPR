@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
 using LTPR.Data;
 using System.Security.Policy;
+using LTPR.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LTPR.Pages.Account
 {
@@ -11,7 +13,8 @@ namespace LTPR.Pages.Account
 
 
         public string userName;
-        private readonly UserManager<ApplicationUser> _userManager;
+        public UserManager<ApplicationUser> userManager;
+        private readonly LTPR.Data.Admin _context;
 
         [BindProperty]
         public string CurrentPassword { get; set; }
@@ -19,23 +22,40 @@ namespace LTPR.Pages.Account
         [BindProperty]
         public Models.RegistrationModel RegInput { get; set; }
 
+
+        public IList<tblSales> tblSales { get; set; }
+        public IList<tblItemsOnSale> tblItemsOnSale { get; set; }
+        public IList<tblMenuItem> tblMenuItem { get; set; }
+
         public ProfileModel(
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> um, Data.Admin context)
         {
-            _userManager = userManager;
-            
+            userManager = um;
+            _context = context;
         }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            userName = _userManager.GetUserName(User);
+            userName = userManager.GetUserName(User);
+            if(_context.tblSales != null)
+            {
+                tblSales = await _context.tblSales.ToListAsync();
+            }
+            if(_context.tblItemsOnSale != null)
+            {
+                tblItemsOnSale = await _context.tblItemsOnSale.ToListAsync();
+            }
+            if(_context.tblMenuItem != null)
+            {
+                tblMenuItem = await _context.tblMenuItem.ToListAsync();
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if(await _userManager.CheckPasswordAsync(user, CurrentPassword))
+            var user = await userManager.GetUserAsync(User);
+            if(await userManager.CheckPasswordAsync(user, CurrentPassword))
             {
-                await _userManager.ChangePasswordAsync(user, CurrentPassword, RegInput.Password);
+                await userManager.ChangePasswordAsync(user, CurrentPassword, RegInput.Password);
                 return Page();
             }
             else

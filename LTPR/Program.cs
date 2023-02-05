@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages(options =>
 {
-	options.Conventions.AuthorizeFolder("/Admin", "Admin");
-	//options.Conventions.AuthorizeFolder("/Purchase");
+    options.Conventions.AuthorizeFolder("/Purchase");
+    options.Conventions.AuthorizeFolder("/Admin", "Admin");
 });
 
 StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];

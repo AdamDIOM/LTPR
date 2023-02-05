@@ -1,13 +1,14 @@
 ﻿@page
 @model LTPR.Pages.Purchase.PayModel
 @{
+    ViewData["Title"] = "Pay";
 }
 
 @using LTPR.Data
 @using Microsoft.Extensions.Options
 @using Stripe
 @inject IOptions<StripeSettings> Stripe
-@Model.amount
+<h1>Please pay £@(Math.Round((decimal)Model.amount / 100, 2).ToString("0.00"))</h1>
 <form asp-page-handler="Charge" asp-route-amount="@Model.amount" method="post">
     <script src="https://checkout.stripe.com/checkout.js"
             class="stripe-button"

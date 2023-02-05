@@ -8,6 +8,7 @@ namespace LTPR.Models
     public class tblItemOnMenu
     {
         [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         [Required]
         public int MID { get; set; }

@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LTPR.styles.css" asp-append-version="true" />
+
+    <!--Mapbox links-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
     <header>
@@ -20,17 +24,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Casa</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ristoranti">Ristoranti</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Menus/Index">Menu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Contatto">Contatto</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Contact/Index">Contact</a>
                         </li>
                     </ul>
                     @using Microsoft.AspNetCore.Identity;
@@ -80,6 +80,7 @@
             @*&copy; 2022 - Le Tre Profezie Ristoranti - <a asp-area="" asp-page="/Privacy">Privacy</a>*@
             <a href="http://validator.w3.org/check?uri=referer">Validate HTML</a>
             <a href="http://jigsaw.w3.org/css-validator/check/referer">Validate CSS</a>
+            <a href="http://achecker.ca/checker/?uri=referer">Validate CSS</a>
             @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")){
                 <a asp-page="/Admin/Index">Admin</a>
             }

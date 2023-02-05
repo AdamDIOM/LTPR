@@ -1,0 +1,149 @@
+﻿@page
+@model LTPR.Pages.Contact.IndexModel
+@{
+	ViewData["Title"] = "Contact";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers;
+
+
+<h2>Contact</h2>
+<p>Please use the contact form below to get in touch</p>
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        @if(Model.signInManager.IsSignedIn(User)){
+            <input asp-for="Email" class="form-control" value="@Model.Email" />
+        }
+        else
+        {
+            <input asp-for="Email" class="form-control" placeholder="Your email" />
+        }
+
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" placeholder="Your name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Message" class="control-label"></label>
+        <textarea asp-for="Message" class="form-control" placeholder="Your message"> </textarea>
+        <span asp-validation-for="Message" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-12">
+        <div id="map">
+            <noscript>
+                <p>Please enable JavaScript for a dynamic map</p>
+                <img src="img/map-noscript.png" alt="map of three original restaurants" class="map" />
+            </noscript>
+        </div>
+
+        @{
+            Model.lg = new List<decimal>();
+            Model.la = new List<decimal>();
+            Model.names = new List<string>();
+            Model.phnums = new List<string>();
+            foreach(var r in Model.tblRestaurants)
+            {
+                Model.lg.Add(Convert.ToDecimal(r.LangLat.Split(',')[0]));
+                Model.la.Add(Convert.ToDecimal(r.LangLat.Split(',')[1]));
+                Model.names.Add(r.Name);
+                Model.phnums.Add(r.PhoneNo);
+            }
+            }
+            <script>
+                mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWF0Y2hlc3RlciIsImEiOiJjbGRvZW9oZ2gwZGNjM25xMHo3cHNxeGRhIn0.lMGJwbv_PFK8SnJ1AZ94qQ';
+                console.log("hello");
+                var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/mapbox/streets-v11',
+                    center: [-4.4753997960552905, 54.17061589329738],
+                    zoom: 10
+                });
+                map.addControl(new mapboxgl.NavigationControl());
+                var lngs = @Html.Raw('['+string.Join( ",", Model.lg.ToArray())+']');
+                var lats = @Html.Raw('['+string.Join( ",", Model.la.ToArray())+']');
+                var titles = @Html.Raw("['"+string.Join("','", Model.names.ToArray())+"']");
+                var phNums = @Html.Raw("['"+string.Join("','", Model.phnums.ToArray())+"']");
+                for(i = 0; i<lngs.length; i++){
+                    console.log("loop");
+                    console.log(lngs[i] +" "+ lats[i])
+                    var marker = new mapboxgl.Marker({color: 'red'})
+                        .setLngLat([lngs[i], lats[i]])
+                        .setPopup(new mapboxgl.Popup().setHTML(`
+                                        <p><b>${titles[i]}</b></p>
+                                        <p>${phNums[i]}</p>
+                                `))
+                        .addTo(map);
+                }
+            
+            </script>
+
+    </div>
+    @{
+        foreach(var restaurant in Model.tblRestaurants)
+         {
+            //<hr />
+            var add = restaurant.Address.Split(',');
+            var ll = restaurant.LangLat.Split(',');
+            
+            <div class="col-sm-12 col-md-6 addressBox">
+            <p>
+            <h3>@restaurant.Name</h3>
+                @foreach(var line in add)
+                {
+                    <span>@line <br /></span>
+                }
+                </p>
+            </div>
+        }
+     }
+    @*<div class="col-sm-12 col-md-6">
+        <div>Map</div>
+        <!--Mapbox Code-->
+        
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="row">
+            <h2>Addresses</h2>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <p>Le Tre Profezie Ristoranti</p>
+                <p>Elmwood House</p>
+                <p>Glencrutchery Road</p>
+                <p>Douglas</p>
+                <p>Isle of Man</p>
+                <p>IM2 6BN</p>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <p>Le Tre Profezie Ristoranti</p>
+                <p>Elmwood House</p>
+                <p>Glencrutchery Road</p>
+                <p>Douglas</p>
+                <p>Isle of Man</p>
+                <p>IM2 6BN</p>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <p>Le Tre Profezie Ristoranti</p>
+                <p>Elmwood House</p>
+                <p>Glencrutchery Road</p>
+                <p>Douglas</p>
+                <p>Isle of Man</p>
+                <p>IM2 6BN</p>
+            </div>
+        </div>
+        <h2>Address</h2>
+    </div>*@
+</div>
+
+
+

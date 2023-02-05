@@ -25,6 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.tblRestaurants[0].Delivers)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tblRestaurants[0].LangLat)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -39,10 +42,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Delivers)
-            </td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Delivers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LangLat)
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
