@@ -4,9 +4,13 @@
 	ViewData["Title"] = "Index - Admin Data Editor";
 }
 
-<h2>Admin: Edit Databases</h2>
+<h1>Admin</h1>
 <table class="table">
 	<tbody>
+		<tr><td><h3>User Management</h3></td></tr>
+		<tr><td><a asp-page="Users/Index">Users & Passwords</a></td></tr>
+		<tr><td><a asp-page="Users/Orders">Order History</a></td></tr>
+		<tr><td><h3>Edit Database Tables</h3></td></tr>
 		<tr><td><a asp-page="Restaurants/Index">Restaurants</a></td></tr>
 		<tr><td><a asp-page="Menus/Index">Menus</a></td></tr>
 		<tr><td><a asp-page="MenuItem/Index">Menu Items</a></td></tr>

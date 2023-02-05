@@ -1,0 +1,80 @@
+﻿@page
+@model LTPR.Pages.Admin.Users.OrdersModel
+@{
+	ViewData["Title"] = "Order History - Admin Data Editor";
+}
+
+<h1>Order History - Admin Data Editor</h1>
+
+<p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Sale ID
+            </th>
+            <th>
+                User
+            </th>
+            <th>
+                Details
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sale in Model.tblSales)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => sale.ID)
+                </td>
+                <td>
+                    @{
+                        var user = await Model.UserManager.FindByIdAsync(sale.UID);
+                        if(user != null)
+                        {
+                            @Html.DisplayFor(modelItem => user.Email)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => sale.UID)
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        decimal sum = 0;
+                        foreach(var item in Model.tblItemsOnSale)
+                        {
+                            if(item.SID == sale.ID)
+                            {
+                                var found = false;
+                                foreach(var mi in Model.tblMenuItem)
+                                {
+                                    if(mi.ID == item.IID)
+                                    {
+                                        <span>@mi.Name x @item.Qty @@ @item.Cost.ToString("0.00") = £@((item.Qty * item.Cost).ToString("0.00"))</span><br />
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                                if (!found)
+                                {
+                                    <span>@item.IID x @item.Qty @@ @item.Cost.ToString("0.00") = £@((item.Qty * item.Cost).ToString("0.00"))</span><br />
+                                }
+                                
+                                sum += (item.Qty * item.Cost);
+                            }
+                        }
+                            <b>Total Cost: £@(sum.ToString("0.00"))</b>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="../Index">Back to List</a>
+</div>
