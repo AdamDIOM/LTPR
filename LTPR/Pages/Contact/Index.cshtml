@@ -68,7 +68,8 @@
                     container: 'map',
                     style: 'mapbox://styles/mapbox/streets-v11',
                     center: [-4.4753997960552905, 54.17061589329738],
-                    zoom: 10
+                    zoom: 10,
+                    cooperativeGestures: true
                 });
                 map.addControl(new mapboxgl.NavigationControl());
                 var lngs = @Html.Raw('['+string.Join( ",", Model.lg.ToArray())+']');
