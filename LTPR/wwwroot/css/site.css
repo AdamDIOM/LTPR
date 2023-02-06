@@ -91,3 +91,8 @@ footer {
     border: 1px solid black;
     text-align:center;
 }
+
+.specials-tbl{
+    margin-left: auto;
+    margin-right:auto;
+}

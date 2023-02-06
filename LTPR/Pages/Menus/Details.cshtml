@@ -28,93 +28,95 @@
                     {
                         foundId = i;
                     }
-                }
-                if (foundId == -1)
-                {
-                    foundId = 0;
-                }
-                    
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id=@("heading" + item.IID)>
-                        <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + @item.IID)>
-                            <div class="row">
-                                <div class="col-4">
-                                    @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)
-                                </div>
-                                <div class="col-4">
-                                    @*@Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Cost)*@
-                                    @Html.DisplayFor(modelItem => item.Cost)
-                                </div>
-                                <div class="col-3">
-                                        @if (Model.signInManager.IsSignedIn(User))
-                                        {
-                                            <button class="btn btn-green" asp-page-handler="Basket" asp-route-iid="@item.IID">Add to Basket</button>
-                                        }
+                    }
+                    if (foundId == -1)
+                    {
+                        foundId = 0;
+                    }
+                    if (!Model.tblMenuItem[foundId].Retired)
+                    {
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id=@("heading" + item.IID)>
+                            <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + @item.IID)>
+                                <div class="row">
+                                    <div class="col-4">
+                                        @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)
+                                    </div>
+                                    <div class="col-4">
+                                        @*@Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Cost)*@
+                                        @Html.DisplayFor(modelItem => item.Cost)
+                                    </div>
+                                    <div class="col-3">
+                                            @if (Model.signInManager.IsSignedIn(User))
+                                            {
+                                                <button class="btn btn-green" asp-page-handler="Basket" asp-route-iid="@item.IID">Add to Basket</button>
+                                            }
                                         
-                                </div>
+                                    </div>
                                 
+                                </div>
+                            </div>
+                        </h2>
+                        <div id=@("collapse" + item.IID) class="accordion-collapse collapse" aria-labelledby=@("heading" + @item.IID) data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Description)
+
+                               <h5>Ingredients</h5>
+
+                                <ul>
+                                @foreach(var mitem in Model.tblIngredientInItem)
+                                {
+                                    @if(mitem.MIID == item.IID)
+                                    {
+                                    
+                                            foundId = -1;
+                                            @for(int i = 0; i < Model.tblIngredients.Count(); i++)
+                                            {
+                                                if(mitem.IID == Model.tblIngredients[i].ID)
+                                                {
+                                                    foundId = i;
+                                                }
+                                             }
+                                            if (foundId == -1)
+                                            {
+                                                <li>@Html.DisplayFor(modelItem => mitem.IID)</li>
+                                            }
+                                            else
+                                            {
+                                                <li>@Html.DisplayFor(modelItem => Model.tblIngredients[foundId].Name)</li>
+                                            }                        
+                                    }
+                                }
+                                </ul>
+                                @foreach(var mitem in Model.tblImageOnMenuItem)
+                                {
+                                    @if(mitem.MIID == item.IID)
+                                    {
+                                    
+                                            foundId = -1;
+                                            @for(int i = 0; i < Model.tblImages.Count(); i++)
+                                            {
+                                                if(mitem.IID == Model.tblImages[i].ID)
+                                                {
+                                                    foundId = i;
+                                                }
+                                             }
+                                            if (foundId == -1)
+                                            {
+                                                @Html.DisplayFor(modelItem => mitem.IID)
+                                            }
+                                            else
+                                            {
+                                                <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.tblImages[foundId].ImageData))" alt="@Model.tblImages[foundId].ImageDescription" />
+                                                @*@Html.DisplayFor(modelItem => Model.tblImages[foundId].ImageDescription)
+                                                                    <br />*@
+                                            }                        
+                                    }
+                                }
                             </div>
                         </div>
-                    </h2>
-                    <div id=@("collapse" + item.IID) class="accordion-collapse collapse" aria-labelledby=@("heading" + @item.IID) data-bs-parent="#accordion">
-                        <div class="accordion-body">
-                            @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Description)
-
-                           <h5>Ingredients</h5>
-
-                            <ul>
-                            @foreach(var mitem in Model.tblIngredientInItem)
-                            {
-                                @if(mitem.MIID == item.IID)
-                                {
-                                    
-                                        foundId = -1;
-                                        @for(int i = 0; i < Model.tblIngredients.Count(); i++)
-                                        {
-                                            if(mitem.IID == Model.tblIngredients[i].ID)
-                                            {
-                                                foundId = i;
-                                            }
-                                         }
-                                        if (foundId == -1)
-                                        {
-                                            <li>@Html.DisplayFor(modelItem => mitem.IID)</li>
-                                        }
-                                        else
-                                        {
-                                            <li>@Html.DisplayFor(modelItem => Model.tblIngredients[foundId].Name)</li>
-                                        }                        
-                                }
-                            }
-                            </ul>
-                            @foreach(var mitem in Model.tblImageOnMenuItem)
-                            {
-                                @if(mitem.MIID == item.IID)
-                                {
-                                    
-                                        foundId = -1;
-                                        @for(int i = 0; i < Model.tblImages.Count(); i++)
-                                        {
-                                            if(mitem.IID == Model.tblImages[i].ID)
-                                            {
-                                                foundId = i;
-                                            }
-                                         }
-                                        if (foundId == -1)
-                                        {
-                                            @Html.DisplayFor(modelItem => mitem.IID)
-                                        }
-                                        else
-                                        {
-                                            <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.tblImages[foundId].ImageData))" alt="@Model.tblImages[foundId].ImageDescription" />
-                                            @*@Html.DisplayFor(modelItem => Model.tblImages[foundId].ImageDescription)
-                                                                <br />*@
-                                        }                        
-                                }
-                            }
-                        </div>
                     </div>
-                </div>
+                    }
                 <div>
                     @*<a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.MID">Details</a> |

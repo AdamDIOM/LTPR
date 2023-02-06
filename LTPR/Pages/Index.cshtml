@@ -7,16 +7,85 @@
 @using LTPR.Data;
 @inject SignInManager<ApplicationUser> SignInManager;
 @inject UserManager<ApplicationUser> UserManager;
-
-<div class="text-center">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <h1 class="display-4">Ciao, @UserManager.GetUserName(User)</h1>
+<div>
+    <div class="text-center">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <h1 class="display-4">Ciao, @UserManager.GetUserName(User)</h1>
+        }
+        else
+        {
+            <h1 class="display-4">Ciao</h1>
+        }
+    <h2>Today's (@DateTime.Now.DayOfWeek) Specials</h2>
+    </div>
+    <table class="specials-tbl">
+        <thead>
+            <tr>
+                <th>Menu Item</th>
+                <th>Cost</th>
+                <th>View Menu</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @{
+        var today = DateTime.Now.DayOfWeek.ToString().Substring(0, 3).ToUpper();
+        @*<form method="post">*@
+            foreach(var iom in Model.tblItemOnMenu)
+            {
+                if(iom.SpecialDay == today)
+                {
+                    <tr>
+                        <td>
+                            @{
+                                var fid = -1;
+                                for (int i = 0; i < Model.tblMenuItem.Count(); i++)
+                                {
+                                    if (iom.IID == Model.tblMenuItem[i].ID)
+                                    {
+                                        fid = i;
+                                    }
+                                }
+                                if(fid != -1)
+                                {
+                                    @Model.tblMenuItem[fid].Name
+                                }
+                                else
+                                {
+                                    @iom.IID
+                                }
+                            }
+                        </td>
+                        <td>£@iom.Cost.ToString("0.00")</td>
+                        <td>
+                            @{
+                                for (int i = 0; i < Model.tblMenus.Count(); i++)
+                                {
+                                    if (iom.MID == Model.tblMenus[i].ID)
+                                    {
+                                        fid = i;
+                                    }
+                                }
+                                if(fid != -1)
+                                {
+                                    <a href="Menus/Details/@iom.MID">View Menu: @Model.tblMenus[fid].Name</a>
+                                }
+                                else
+                                {
+                                    <a href="Menus/Details/@iom.MID">View Menu</a>
+                                }
+                                }
+                        </td>
+                        <td>
+                                <form method="post"><button asp-page-handler="Basket" asp-route-iid="@iom.IID" asp-route-mid="@iom.MID">Add to basket</button></form>
+                        </td>
+                    </tr>
+                }
+            }
     }
-    else
-    {
-        <h1 class="display-4">Ciao</h1>
-    }
+        </tbody>
+    </table>
     
     <div class="row gallery">
         

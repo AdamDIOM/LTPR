@@ -20,12 +20,16 @@ namespace LTPR.Pages.Admin.MenuItem
         }
 
         public IList<tblMenuItem> tblMenuItem { get;set; } = default!;
+        public List<tblMenuItem> tblMIList { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.tblMenuItem != null)
             {
                 tblMenuItem = await _context.tblMenuItem.ToListAsync();
+                tblMIList = tblMenuItem.ToList();
+                tblMIList = tblMIList.OrderBy(x => x.Retired).ToList();
+
             }
         }
     }

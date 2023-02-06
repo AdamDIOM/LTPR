@@ -16,5 +16,6 @@ namespace LTPR.Models
         public int IID { get; set; }
         [Required, Range(0, 50), Column(TypeName = "decimal(18,2)")]
         public decimal Cost { get; set; }
+        public string SpecialDay { get; set; }
     }
 }

@@ -13,5 +13,7 @@ namespace LTPR.Models
         //public decimal Cost { get; set; }
         [Required, StringLength(300), MinLength(10)]
         public string Description { get; set; }
+        [Required]
+        public bool Retired { get; set; }
     }
 }

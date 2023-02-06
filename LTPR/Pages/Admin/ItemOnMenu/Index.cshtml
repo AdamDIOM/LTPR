@@ -22,6 +22,8 @@
             <th>
                 Cost
             </th>
+            <th>Special?</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -68,13 +70,49 @@
                     }
             </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cost)
-                </td>
+                    @if (foundId == -1)
+                    {
+                        
+                        <td>@Html.DisplayFor(modelItem => item.Cost)</td>
+                        <td>
+                            @if(item.SpecialDay != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.SpecialDay)
+                            }
+                            else
+                            {
+                                <span>None selected</span>
+                            }
+                        </td>
+                    }
+                    else
+                    {
+                        if (Model.tblMenuItem[foundId].Retired)
+                        {
+                            <td>Item Retired</td><td></td>
+                        }
+                        else
+                        {
+                        <td>@Html.DisplayFor(modelItem => item.Cost)</td>
+                        
+                        <td>
+                            @if(item.SpecialDay != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.SpecialDay)
+                            }
+                            else
+                            {
+                                <span>None selected</span>
+                            }
+                        </td>
+                        }
+                    }
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Change Price</a> |
-                @*        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |*@
-                <a asp-page="./Delete" asp-route-id="@item.ID">Remove Item from Menu</a>
+                    @if(foundId != -1 && !Model.tblMenuItem[foundId].Retired)
+                    {
+                        <span><a asp-page="./Edit" asp-route-id="@item.ID">Change Price or Special</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Remove Item from Menu</a></span>
+                    }
             </td>
         </tr>
 }

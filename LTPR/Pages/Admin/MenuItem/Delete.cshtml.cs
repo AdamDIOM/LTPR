@@ -53,8 +53,13 @@ namespace LTPR.Pages.Admin.MenuItem
             if (tblmenuitem != null)
             {
                 tblMenuItem = tblmenuitem;
-                _context.tblMenuItem.Remove(tblMenuItem);
-                await _context.SaveChangesAsync();
+                tblMenuItem.Retired = true;
+                //_context.tblMenuItem.Remove(tblMenuItem);
+                _context.Attach(tblMenuItem).State = EntityState.Modified;
+                try
+                {
+                    await _context.SaveChangesAsync();
+                } catch { }
             }
 
             return RedirectToPage("./Index");

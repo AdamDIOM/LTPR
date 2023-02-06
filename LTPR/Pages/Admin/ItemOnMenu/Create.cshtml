@@ -27,7 +27,10 @@
                 <select asp-for="tblItemOnMenu.IID" class="form-control">
                     @foreach(var item in Model.tblMenuItem)
                     {
-                        <option value=@item.ID>@item.Name</option>
+                        if (!item.Retired)
+                        {
+                            <option value=@item.ID>@item.Name</option>
+                        }
                     }
                 </select>
                 <span asp-validation-for="tblItemOnMenu.IID" class="text-danger"></span>
@@ -36,6 +39,20 @@
                 <label asp-for="tblItemOnMenu.Cost" class="control-label"></label>
                 <input asp-for="tblItemOnMenu.Cost" class="form-control" />
                 <span asp-validation-for="tblItemOnMenu.Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblItemOnMenu.SpecialDay" class="control-label"></label>
+                <select asp-for="tblItemOnMenu.SpecialDay" class="form-control">
+                    <option value="NONE">Please select (optional)</option>
+                    <option value="MON">Monday</option>
+                    <option value="TUE">Tuesday</option>
+                    <option value="WED">Wednesday</option>
+                    <option value="THU">Thursday</option>
+                    <option value="FRI">Friday</option>
+                    <option value="SAT">Saturday</option>
+                    <option value="SUN">Sunday</option>
+                </select>
+                <span asp-validation-for="tblItemOnMenu.SpecialDay" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Add" class="btn btn-primary" />

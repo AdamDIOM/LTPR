@@ -23,6 +23,7 @@
                 <span asp-validation-for="tblMenuItem.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <input type="hidden" asp-for="tblMenuItem.Retired" value="false" />
                 <input type="submit" value="Create Menu Item" class="btn btn-primary" />
             </div>
         </form>
