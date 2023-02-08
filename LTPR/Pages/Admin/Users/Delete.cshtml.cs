@@ -22,7 +22,7 @@ namespace LTPR.Pages.Admin.Users
         }
 
 
-        public async Task<IActionResult> OnGetAsync(string? UserName)
+        public IActionResult OnGet(string UserName)
         {
             if(UserName != null)
             {
@@ -35,7 +35,7 @@ namespace LTPR.Pages.Admin.Users
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string? UserName)
+        public async Task<IActionResult> OnPostAsync(string UserName)
         {
             if (UserName == null)
             {

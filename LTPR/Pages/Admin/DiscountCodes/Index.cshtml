@@ -1,0 +1,47 @@
+﻿@page
+@model LTPR.Pages.Admin.DiscountCodes.IndexModel
+
+@{
+    ViewData["Title"] = "Discount Codes Index - Admin Data Editor";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.tblDiscountCodes[0].DiscountCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tblDiscountCodes[0].DiscountAmount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.tblDiscountCodes) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountCode)
+            </td>
+            <td>
+                    @if (item.IsPercentage)
+                    {
+                        <span>@item.DiscountAmount%</span>
+                    }
+                    else
+                    {
+                        <span>£@item.DiscountAmount</span>
+                    }
+            </td>
+            <td>
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

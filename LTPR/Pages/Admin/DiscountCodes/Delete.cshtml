@@ -1,0 +1,40 @@
+﻿@page
+@model LTPR.Pages.Admin.DiscountCodes.DeleteModel
+
+@{
+    ViewData["Title"] = "Discount Codes Delete - Admin Data Editor";
+}
+
+<h1>Delete Discount Code</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.tblDiscountCodes.DiscountCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.tblDiscountCodes.DiscountCode)
+        </dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.tblDiscountCodes.DiscountAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @if (Model.tblDiscountCodes.IsPercentage)
+            {
+                <span>@Model.tblDiscountCodes.DiscountAmount%</span>
+            }
+            else
+            {
+                <span>£@Model.tblDiscountCodes.DiscountAmount</span>
+            }
+        </dt>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="tblDiscountCodes.ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

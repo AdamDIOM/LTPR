@@ -8,15 +8,15 @@
 @using Microsoft.Extensions.Options
 @using Stripe
 @inject IOptions<StripeSettings> Stripe
-<h1>Please pay £@(Math.Round((decimal)Model.amount / 100, 2).ToString("0.00"))</h1>
-<form asp-page-handler="Charge" asp-route-amount="@Model.amount" method="post">
+<h1>Please pay £@(Math.Round((decimal)Model.pmtAmt / 100, 2).ToString("0.00"))</h1>
+<form asp-page-handler="Charge" asp-route-amount="@Model.amount" asp-route-discount="@Model.discount" asp-route-uid="@Model.id" method="post">
     <script src="https://checkout.stripe.com/checkout.js"
             class="stripe-button"
             data-key="pk_test_51MWpm1FGPmD5MphGi2Ue0s4hQniUQQqvcYYS9FoJOpPQdJcJuY5EC0qD19ZATRkskOjhGe0y7m0nPMEXRpqSxP04009PjL1oN5"
             data-locale="auto"
             data-name="LTPR"
             data-description="LTPR Orders"
-            data-amount="@Model.amount"
+            data-amount="@Model.pmtAmt"
             data-currency="GBP">
     </script>
 </form>

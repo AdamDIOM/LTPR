@@ -23,12 +23,19 @@ namespace LTPR.Pages.Purchase
         public string id { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int amount { get; set; }
-        public IActionResult OnGet()
+        public double amount { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public double discount { get; set; }
+        public int pmtAmt { get; set; }
+        public async Task<IActionResult> OnGetAsync()
         {
-            if(id == null || amount == null)
+            pmtAmt = (int)Math.Round((amount - discount)*100);
+            if(pmtAmt <= 0 || amount <= 0)
             {
-                return NotFound();
+                int sid = await Process();
+                return Redirect("/Purchase/Confirm?amount=" + Math.Round(amount - discount, 2) + "&id=" + sid + "&uid=" + id);
+
+                //process
             }
             else
             {
@@ -36,7 +43,7 @@ namespace LTPR.Pages.Purchase
             }
         }
 
-        public async Task Process()
+        public async Task<int> Process()
         {
 
             var user = await _userManager.GetUserAsync(User);
@@ -47,6 +54,15 @@ namespace LTPR.Pages.Purchase
                 UID = user.Id,
                 OrderTime = DateTime.Now
             };
+
+            if(discount != 0)
+            {
+                sale.Discount = discount;
+            }
+            else
+            {
+                discount = 0;
+            }
 
             _context.tblSales.Add(sale);
 
@@ -76,30 +92,39 @@ namespace LTPR.Pages.Purchase
             }
 
             await _context.SaveChangesAsync();
+
+            return sale.ID;
         }
 
-        public async Task<IActionResult> OnPostChargeAsync(string stripeEmail, string stripeToken, int amount)
+        public async Task<IActionResult> OnPostChargeAsync(string stripeEmail, string stripeToken, double amount, double discount, string uid)
         {
             var cus = new CustomerService();
             var chs = new ChargeService();
 
-            var cu = cus.Create(new CustomerCreateOptions
+            try
             {
-                Email = stripeEmail,
-                Source = stripeToken
-            });
+                var cu = cus.Create(new CustomerCreateOptions
+                {
+                    Email = stripeEmail,
+                    Source = stripeToken
+                });
 
-            var ch = chs.Create(new ChargeCreateOptions
+                var ch = chs.Create(new ChargeCreateOptions
+                {
+                    Amount = (int)((amount-discount)*100),
+                    Description = "LTPR Charge",
+                    Currency = "gbp",
+                    Customer = cu.Id
+                });
+
+                int id = await Process();
+
+                return Redirect("/Purchase/Confirm?amount=" + Math.Round(amount-discount, 2) + "&id=" + id + "&uid=" + uid);
+            }
+            catch (Exception ex)
             {
-                Amount = amount,
-                Description = "LTPR Charge",
-                Currency = "gbp",
-                Customer = cu.Id
-            }) ;
-
-            await Process();
-
-            return Redirect("/Purchase/Confirm?amount=" + amount);
+                return Redirect("/Purchase/PaymentFailed?reason=" + ex.Message);
+            }
         }
     }
 }

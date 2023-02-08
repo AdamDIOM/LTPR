@@ -5,7 +5,19 @@
 
 }
 <h1>Basket</h1>
-
+<form method="post">
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-3">
+        <input asp-for="DiscountCode" placeholder="Discount Code" class="discount-input"/>
+    </div>
+    <div class="col-3">
+        <button asp-page-handler="Discount" asp-route-DiscountCode="@Model.DiscountCode" class="discount-button btn btn-r">
+            Apply Code
+        </button>
+    </div>
+</div>
+<hr />
 <div class="row">
     <div class="col-sm-8 col-md-4">Menu Item</div>
     <div class="col-sm-4 col-md-3">Menu</div>
@@ -14,7 +26,6 @@
     <div class="col-sm-4 col-md-1">Total</div>
 </div>
 <hr />
-<form method="post">
     @{
         var items = 0;
         foreach (var item in Model.tblBasket)
@@ -45,24 +56,24 @@
                     }
                 </div>
                 <div class="col-md-3 col-sm-4">
-                @{
-                    foundId = -1;
-                    @for (int i = 0; i < Model.tblMenus.Count(); i++)
-                    {
-                        if (item.MID == Model.tblMenus[i].ID)
+                    @{
+                        foundId = -1;
+                        @for (int i = 0; i < Model.tblMenus.Count(); i++)
                         {
-                            foundId = i;
-                        }
-                    }
-                    if (foundId == -1)
-                    {
-                        @Html.DisplayFor(modelItem => item.MID)
-                    }
-                    else
-                    {
-                                @Html.DisplayFor(modelItem => Model.tblMenus[foundId].Name)
+                            if (item.MID == Model.tblMenus[i].ID)
+                            {
+                                foundId = i;
                             }
                         }
+                        if (foundId == -1)
+                        {
+                            @Html.DisplayFor(modelItem => item.MID)
+                        }
+                        else
+                        {
+                                    @Html.DisplayFor(modelItem => Model.tblMenus[foundId].Name)
+                        }
+                    }
                     </div>
                 decimal cost = 0;
                 <div class="col-md-1 col-sm-4">
@@ -113,16 +124,22 @@
         <div class="row">
             <div class="col-8"></div>
             <div class="col-2">Total Cost</div>
+            @Model.UpdateDiscount()
             <div class="col-2">£@Math.Round(Model.totalSum, 2)</div>
         </div>
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-                    <button asp-page-handler="Charge" asp-route-totalSum="@Model.totalSum" asp-route-id="@Model.user.Id">
-                        Confirm and Pay £@Math.Round(Model.totalSum,2)
-                </button>
+            <hr />
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">@Model.DiscountResponse</div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <button asp-page-handler="Charge" asp-route-totalSum="@Model.totalSum" asp-route-DiscountValue="@Model.DiscountValue" asp-route-id="@Model.user.Id" class="btn btn-r pay-button">
+                        Confirm and Pay £@Math.Round(Model.totalSum-Model.DiscountValue,2)
+                    </button>
+                </div>
+            </div>
     }
 }
 </form>

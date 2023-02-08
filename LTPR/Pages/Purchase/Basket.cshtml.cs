@@ -16,13 +16,22 @@ namespace LTPR.Pages.Purchase
         [BindProperty(SupportsGet = true)]
         public decimal totalSum { get; set; }
 
-        [BindProperty(SupportsGet =true)]
+        [BindProperty(SupportsGet = true)]
         public int id { get; set; }
         public ApplicationUser user { get; set; }
         public IList<tblBasket> tblBasket { get; set; }
         public IList<tblMenuItem> tblMenuItem { get; set; }
         public IList<tblMenus> tblMenus { get; set; }
         public IList<tblItemOnMenu> tblItemOnMenu { get; set; }
+        public IList<tblDiscountCodes> tblDiscountCodes { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string DiscountCode { get; set; }
+        [BindProperty]
+        public string DiscountResponse { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public bool DiscountIsPercent { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public decimal DiscountValue { get; set; }
 
         public BasketModel(Data.Admin context, UserManager<ApplicationUser> userManager)
         {
@@ -47,7 +56,59 @@ namespace LTPR.Pages.Purchase
             {
                 tblItemOnMenu = await _context.tblItemOnMenu.ToListAsync();
             }
+            if (_context.tblDiscountCodes != null)
+            {
+                tblDiscountCodes = await _context.tblDiscountCodes.ToListAsync();
+            }
             user = await _userManager.GetUserAsync(User);
+            DiscountResponse = "";
+        }
+
+        public string UpdateDiscount()
+        {
+            if (DiscountCode != null)
+            {
+                bool found = false;
+                foreach (var code in tblDiscountCodes)
+                {
+                    if (code.DiscountCode == DiscountCode)
+                    {
+                        DiscountIsPercent = code.IsPercentage;
+                        DiscountAmount = code.DiscountAmount;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    DiscountResponse = $"Discount code \"{DiscountCode}\" is invalid.";
+                }
+                else
+                {
+                    if (DiscountIsPercent)
+                    {
+                        DiscountValue = Math.Round(totalSum * (DiscountAmount / 100), 2);
+                        DiscountResponse = $"Discount code \"{DiscountCode}\" gives {DiscountAmount.ToString("0.##")}% Discount, £{DiscountValue.ToString("0.00")} off.";
+                    }
+                    else
+                    {
+                        if(totalSum < DiscountAmount)
+                        {
+                            DiscountValue = totalSum;
+                        }
+                        else
+                        {
+                            DiscountValue = DiscountAmount;
+                        }
+                        DiscountResponse = $"Discount code \"{DiscountCode}\" gives £{DiscountAmount.ToString("0.00")} Discount!";
+                    }
+                }
+            }
+            else
+            {
+                DiscountResponse = "";
+            }
+            return "";
         }
 
         public async Task<IActionResult> OnPostQtyMinusAsync()
@@ -56,7 +117,7 @@ namespace LTPR.Pages.Purchase
             {
                 tblBasket = await _context.tblBasket.ToListAsync();
             }
-            if (id == null || id < 0)
+            if (id < 0)
             {
                 return NotFound();
             }
@@ -88,7 +149,7 @@ namespace LTPR.Pages.Purchase
             {
                 tblBasket = await _context.tblBasket.ToListAsync();
             }
-            if (id == null || id < 0)
+            if (id < 0)
             {
                 return NotFound();
             }
@@ -111,9 +172,14 @@ namespace LTPR.Pages.Purchase
         
 
 
-        public async Task<IActionResult> OnPostChargeAsync(decimal totalSum, string id)
+        public  IActionResult OnPostCharge(decimal totalSum, decimal DiscountValue, string id)
         {
-            return Redirect("Pay?amount=" + Math.Round(totalSum*100) + "&id=" + id);
+            return Redirect("Pay?amount=" + totalSum + "&discount=" + DiscountValue+"&id=" + id);
+        }
+
+        public  IActionResult OnPostDiscount(string DiscountCode)
+        {
+            return Redirect("Basket?DiscountCode=" + DiscountCode);
         }
     }
 }

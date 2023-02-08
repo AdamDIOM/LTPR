@@ -10,5 +10,6 @@ namespace LTPR.Models
         public string UID { get; set; }
         [Required]
         public DateTime OrderTime { get; set; }
+        public double Discount { get; set; }
     }
 }

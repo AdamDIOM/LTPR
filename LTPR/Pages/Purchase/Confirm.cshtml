@@ -3,6 +3,64 @@
 @{
 	ViewData["Title"] = "Purchase Confirmed";
 }
-<h1>Thank you for your purchase of £@(((decimal)Model.amount)/100).</h1>
 
-<p>show order items here</p>
+@if(Model.id != null){
+	<h1>Thank you for your purchase of £@Model.amount.ToString("0.00").</h1>
+	<div class="row">
+		<div class="col-sm-8 col-md-4">Menu Item</div>
+		<div class="col-sm-4 col-md-1">Price</div>
+		<div class="col-sm-4 col-md-3">Quantity</div>
+		<div class="col-sm-4 col-md-1">Total</div>
+	</div>
+	double totalCalc = 0;
+	foreach(var item in Model.tblItemsOnSale)
+	{
+		if(item.SID == Model.id)
+		{
+			<div class="row">
+				<div class="col-sm-8 col-md-4">
+					@{
+						var fID = -1;
+						for (int i = 0; i < Model.tblMenuItem.Count; i++)
+						{
+							if (Model.tblMenuItem[i].ID == item.IID)
+							{
+								fID = i;
+								break;
+							}
+						}
+
+						if (fID != -1)
+						{
+							<span>@Model.tblMenuItem[fID].Name</span>
+						}
+						else
+						{
+							<span>@item.IID</span>
+						}
+					}
+				</div>
+				<div class="col-sm-4 col-md-1">£@item.Cost.ToString("0.00")</div>
+				<div class="col-sm-4 col-md-3">@item.Qty</div>
+				<div class="col-sm-4 col-md-1">£@((item.Cost * item.Qty).ToString("0.00"))</div>
+			</div>
+			totalCalc += Math.Round((double)item.Cost, 2) * item.Qty;
+		}
+	}
+	<div class="row">
+		<div class="col-md-6 col-sm-1"></div>
+		<div class="col-md-6 col-sm-11">Subtotal: £@Math.Round(totalCalc, 2).ToString("0.00")</div>
+	</div>
+	<div>
+		@if(Model.sale.Discount > 0)
+		{
+			<span>Discount applied: £@Model.sale.Discount.ToString("0.00")</span>
+			totalCalc -= Model.sale.Discount;
+		}
+		
+		@Model.CheckSale(Math.Round(totalCalc,2))
+	</div>
+}
+else{
+	<h2>Order details not found</h2>
+}

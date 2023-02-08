@@ -67,7 +67,13 @@
                                 sum += (item.Qty * item.Cost);
                             }
                         }
-                            <b>Total Cost: £@(sum.ToString("0.00"))</b>
+
+                        if (sale.Discount > 0)
+                        {
+                            <p>Subtotal: £@(sum.ToString("0.00"))</p>
+                            <span>Discount applied: £@Math.Round(sale.Discount, 2)</span>
+                        }
+                            <b>Total Cost: £@(((double)sum-sale.Discount).ToString("0.00"))</b>
                     }
                 </td>
             </tr>

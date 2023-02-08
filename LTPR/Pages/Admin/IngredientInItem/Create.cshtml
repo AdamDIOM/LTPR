@@ -17,7 +17,10 @@
                 <select asp-for="tblIngredientInItem.MIID" class="form-control">
                     @foreach(var item in Model.tblMenuItem)
                     {
-                        <option value=@item.ID>@item.Name</option>
+                        if (!item.Retired)
+                        {
+                            <option value=@item.ID>@item.Name</option>
+                        }
                     }
                 </select>
                 <span asp-validation-for="tblIngredientInItem.MIID" class="text-danger"></span>

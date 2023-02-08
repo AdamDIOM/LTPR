@@ -27,27 +27,27 @@
             <tr>
                 <td>
                     @{
-                        var foundId = -1;
+                        var foundIdI = -1;
                         @for (int i = 0; i < Model.tblMenuItem.Count(); i++)
                         {
                             if (item.MIID == Model.tblMenuItem[i].ID)
                             {
-                                foundId = i;
+                                foundIdI = i;
                             }
                         }
-                        if (foundId == -1)
+                        if (foundIdI == -1)
                         {
                             @Html.DisplayFor(modelItem => item.MIID)
                         }
                         else
                         {
-                            @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)
+                            @Html.DisplayFor(modelItem => Model.tblMenuItem[foundIdI].Name)
                         }
                     }
                 </td>
                 <td>
                     @{
-                        foundId = -1;
+                        var foundId = -1;
                         @for (int i = 0; i < Model.tblIngredients.Count(); i++)
                         {
                             if (item.IID == Model.tblIngredients[i].ID)
@@ -68,7 +68,14 @@
                 <td>
                     @*<a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |*@
-                    <a asp-page="./Delete" asp-route-id="@item.ID">Remove Ingredient from Menu Item</a>
+                    @if (!Model.tblMenuItem[foundIdI].Retired)
+                    {
+                        <a asp-page="./Delete" asp-route-id="@item.ID">Remove Ingredient from Menu Item</a>
+                    }
+                    else
+                    {
+                        <span>Menu item retired</span>
+                    }
                 </td>
             </tr>
 }

@@ -28,10 +28,12 @@ namespace LTPR.Data
         public DbSet<LTPR.Models.tblBasket> tblBasket { get; set; } = default!;
         public DbSet<LTPR.Models.tblSales> tblSales { get; set; } = default!;
         public DbSet<LTPR.Models.tblItemsOnSale> tblItemsOnSale { get; set; } = default!;
+        public DbSet<LTPR.Models.tblDiscountCodes> tblDiscountCodes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
+            modelbuilder.Entity<tblDiscountCodes>().ToTable("tblDiscountCodes");
             modelbuilder.Entity<tblItemsOnSale>().ToTable("tblItemsOnSale");
             modelbuilder.Entity<tblSales>().ToTable("tblSales");
             modelbuilder.Entity<tblBasket>().ToTable("tblBasket");
@@ -55,5 +57,7 @@ namespace LTPR.Data
             base.OnModelCreating(modelbuilder);
             modelbuilder.Ignore<IdentityUserLogin<string>>();
         }
+
+
     }
 }

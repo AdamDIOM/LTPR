@@ -72,15 +72,20 @@
                                 {
                                     if(item.IID == menuitem.ID)
                                     {
-                                        <p>@menuitem.Name | £@item.Cost.ToString("0.00")</p>
-                                        cost += item.Cost;
+                                        <p>@menuitem.Name | £@item.Cost.ToString("0.00") x @item.Qty</p>
+                                        cost += item.Cost * item.Qty;
                                         break;
                                     }
                                 }
 
                             }
                         }
-                        <b>Total cost: £@cost.ToString("0.00")</b>
+                        if(sale.Discount > 0)
+                        {
+                            <p>Subtotal: £@(cost.ToString("0.00"))</p>
+                            <span>Discount applied: £@Math.Round(sale.Discount, 2)</span>
+                        }
+                        <b>Total cost: £@(((double)cost-sale.Discount).ToString("0.00"))</b>
                     }
                 }
             }
