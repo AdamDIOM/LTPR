@@ -29,6 +29,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 	.AddEntityFrameworkStores<Admin>()
 	.AddDefaultTokenProviders();
 
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
@@ -55,6 +56,8 @@ using (var scope = app.Services.CreateScope())
 
 	app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseStatusCodePagesWithRedirects("/Error/{0}");
 
 app.UseRouting();
 
