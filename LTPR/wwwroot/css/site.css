@@ -25,11 +25,11 @@ main {
 
 header {
     background-color: #ff8888;
-    height:7vh;
+    /*height:7vh;*/
 }
-header nav{
+/*header nav{
     height:100%;
-}
+}*/
 
 footer {
     background-color: forestgreen;
@@ -73,10 +73,6 @@ footer a{
     width:70vw;
 }
 
-.logout-button{
-    padding:7px;
-}
-
 .accordion-item .row{
     width:100%;
 }
@@ -107,14 +103,39 @@ footer a{
 
 .btn-r {
     background-color:#ff8888;
-    color: black;
+    color: black !important;
 }
 
 .btn-r:hover{
     background-color:#884444;
-    color:white;
+    color:white !important;
 }
 
 .text-dark:hover{
     color:white;
 }
+
+.btn-text-black{
+    color:black;
+}
+
+/*@media (max-width:767px) {
+    .btn-header {
+        width: 100vw;
+        padding-left:0px;
+        border-radius: 0;
+    }
+    .dropdownMenu {
+        padding: 0px;
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100vw;
+    }
+    .navbarTitle{
+        margin-left:10vw;
+    }
+    .navbarButton{
+        margin-right:10vw;
+        margin-left:auto;
+    }
+}*/

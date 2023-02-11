@@ -9,7 +9,7 @@
 
 <div>
     <hr />
-    <h4>@Html.DisplayFor(model => model.tblMenus.Name)</h4>
+    <h2>@Html.DisplayFor(model => model.tblMenus.Name)</h2>
 </div>
 <div class="accordion">
 
@@ -36,11 +36,11 @@
                     if (!Model.tblMenuItem[foundId].Retired)
                     {
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id=@("heading" + item.IID)>
-                            <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + @item.IID)>
+                        <div class="accordion-header" id=@("heading" + item.IID)>
+                            <div class="accordion-button" @*type="button"*@ data-bs-toggle="collapse" data-bs-target=@("#collapse" + item.IID)  aria-controls=@("collapse" + @item.IID)>
                                 <div class="row">
                                     <div class="col-4">
-                                        @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)
+                                            <b>@Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Name)</b>
                                     </div>
                                     <div class="col-4">
                                         @*@Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Cost)*@
@@ -56,12 +56,12 @@
                                 
                                 </div>
                             </div>
-                        </h2>
+                        </div>
                         <div id=@("collapse" + item.IID) class="accordion-collapse collapse" aria-labelledby=@("heading" + @item.IID) data-bs-parent="#accordion">
                             <div class="accordion-body">
                                 @Html.DisplayFor(modelItem => Model.tblMenuItem[foundId].Description)
 
-                               <h5>Ingredients</h5>
+                                    <p><b>Ingredients</b></p>
 
                                 <ul>
                                 @foreach(var mitem in Model.tblIngredientInItem)

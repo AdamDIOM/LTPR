@@ -12,6 +12,8 @@ namespace LTPR.Pages.Admin.Menus
 {
     public class CreateModel : PageModel
     {
+        [BindProperty(SupportsGet = true)]
+        public string ru { get; set; }
         private readonly LTPR.Data.Admin _context;
 
         public CreateModel(LTPR.Data.Admin context)
@@ -39,7 +41,21 @@ namespace LTPR.Pages.Admin.Menus
             _context.tblMenus.Add(tblMenus);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            if (ru == "")
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                try
+                {
+                    return RedirectToPage(ru);
+                }
+                catch
+                {
+                    return RedirectToPage("./Index");
+                }
+            }
         }
     }
 }

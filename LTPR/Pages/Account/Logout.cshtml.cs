@@ -13,14 +13,11 @@ namespace LTPR.Pages.Account
             _signInManager = signInManager;
         }
     
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             await _signInManager.SignOutAsync();
             
 		    return RedirectToPage("/Index");
-        }
-        public void OnGet()
-        {
         }
     }
 }

@@ -101,9 +101,9 @@
                     @*
                     need [-] number [+]
                     *@
-                    <button asp-page-handler="QtyMinus" asp-route-id="@item.ID">-</button>
+                        <button asp-page-handler="QtyMinus" asp-route-id="@item.ID" class="btn btn-outline-danger btn-text-black">-</button>
                         @Html.DisplayFor(modelItem => item.Qty)
-                        <button asp-page-handler="QtyPlus" asp-route-id="@item.ID">+</button>
+                        <button asp-page-handler="QtyPlus" asp-route-id="@item.ID" class="btn btn-outline-success btn-text-black">+</button>
                 </div>
                 <div class="col-md-1 col-sm-4">
 

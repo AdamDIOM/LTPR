@@ -50,7 +50,7 @@ namespace LTPR.Pages.Menus
                 if (!string.IsNullOrEmpty(qry))
                 {
                     tblItemOnMenu = await _context.tblItemOnMenu
-                        .FromSqlRaw("SELECT tblItemOnMenu.ID, tblItemOnMenu.MID, tblItemOnMenu.IID FROM tblItemOnMenu INNER JOIN tblMenuItem ON tblItemOnMenu.IID = tblMenuItem.ID WHERE tblMenuItem.Name LIKE '%" + qry + "%'").ToListAsync();
+                        .FromSqlRaw("SELECT tblItemOnMenu.ID, tblItemOnMenu.MID, tblItemOnMenu.IID, tblItemOnMenu.Cost, tblItemOnMenu.SpecialDay FROM tblItemOnMenu INNER JOIN tblMenuItem ON tblItemOnMenu.IID = tblMenuItem.ID WHERE tblMenuItem.Name LIKE '%" + qry + "%'").ToListAsync();
                 } else
                 {
                     tblItemOnMenu = await _context.tblItemOnMenu.ToListAsync();
