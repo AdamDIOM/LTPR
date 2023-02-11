@@ -36,7 +36,7 @@
                 <td>
                 @if (item.Retired)
                 {
-                    <p>Item retired</p>
+                        <span>Item retired | <a asp-route-Unretire="@item.ID">Unretire</a></span>
                 }
                 else
                 {

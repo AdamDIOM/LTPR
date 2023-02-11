@@ -21,8 +21,10 @@ namespace LTPR.Pages.Admin.MenuItem
 
         public IList<tblMenuItem> tblMenuItem { get;set; } = default!;
         public List<tblMenuItem> tblMIList { get;set; } = default!;
+        [BindProperty(SupportsGet = true)]
+        public int Unretire { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (_context.tblMenuItem != null)
             {
@@ -30,6 +32,17 @@ namespace LTPR.Pages.Admin.MenuItem
                 tblMIList = tblMenuItem.ToList();
                 tblMIList = tblMIList.OrderBy(x => x.Retired).ToList();
 
+            }
+            if(Unretire > 0)
+            {
+                var tblmenuitem = await _context.tblMenuItem.FirstOrDefaultAsync(m => m.ID == Unretire);
+                tblmenuitem.Retired = false;
+                await _context.SaveChangesAsync();
+                return RedirectToPage();
+            }
+            else
+            {
+                return Page();
             }
         }
     }

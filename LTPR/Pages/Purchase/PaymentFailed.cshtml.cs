@@ -9,7 +9,7 @@ namespace LTPR.Pages.Purchase
         public string Reason { get; set; }
         public void OnGet()
         {
-            if(Reason == null)
+            if(Reason == null || Reason == "")
             {
                 RedirectToPage("/Index");
             }

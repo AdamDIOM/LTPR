@@ -27,6 +27,7 @@ namespace LTPR.Pages.Purchase
         [BindProperty(SupportsGet = true)]
         public double discount { get; set; }
         public int pmtAmt { get; set; }
+        //if payment value is less than 0, go straight to confirm page
         public async Task<IActionResult> OnGetAsync()
         {
             pmtAmt = (int)Math.Round((amount - discount)*100);
@@ -34,8 +35,6 @@ namespace LTPR.Pages.Purchase
             {
                 int sid = await Process();
                 return Redirect("/Purchase/Confirm?amount=" + Math.Round(amount - discount, 2) + "&id=" + sid + "&uid=" + id);
-
-                //process
             }
             else
             {
@@ -96,6 +95,7 @@ namespace LTPR.Pages.Purchase
             return sale.ID;
         }
 
+        // tries to charge, if there is any error (such as card decline) it returns to payment failed
         public async Task<IActionResult> OnPostChargeAsync(string stripeEmail, string stripeToken, double amount, double discount, string uid)
         {
             var cus = new CustomerService();
