@@ -14,10 +14,13 @@ namespace LTPR.Pages.Contact
     {
         [BindProperty]
         [EmailAddress]
+        [Required]
         public string Email { get; set; }
         [BindProperty]
+        [Required]
         public string Name { get; set; }
         [BindProperty]
+        [Required]
         public string Message { get; set; }
 
         [BindProperty]
@@ -56,8 +59,12 @@ namespace LTPR.Pages.Contact
             }
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
+            if (_context.tblRestaurants != null)
+            {
+                tblRestaurants = await _context.tblRestaurants.ToListAsync();
+            }
             if (!ModelState.IsValid)
             {
                 return Page();
