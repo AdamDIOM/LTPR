@@ -16,6 +16,7 @@ namespace LTPR.Data
         {
         }
 
+        // declare all database tables
 		public DbSet<LTPR.Models.tblIngredientInItem> tblIngredientInItem { get; set; } = default!;
 		public DbSet<LTPR.Models.tblIngredients> tblIngredients { get; set; } = default!;
 		public DbSet<LTPR.Models.tblItemOnMenu> tblItemOnMenu { get; set; } = default!;
@@ -30,34 +31,24 @@ namespace LTPR.Data
         public DbSet<LTPR.Models.tblItemsOnSale> tblItemsOnSale { get; set; } = default!;
         public DbSet<LTPR.Models.tblDiscountCodes> tblDiscountCodes { get; set; }
 
-
-        protected override void OnModelCreating(ModelBuilder modelbuilder)
+     protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
+            // init database tables
             modelbuilder.Entity<tblDiscountCodes>().ToTable("tblDiscountCodes");
             modelbuilder.Entity<tblItemsOnSale>().ToTable("tblItemsOnSale");
             modelbuilder.Entity<tblSales>().ToTable("tblSales");
             modelbuilder.Entity<tblBasket>().ToTable("tblBasket");
             modelbuilder.Entity<tblImageOnMenuItem>().ToTable("tblImageOnMenuItem");
-                //.HasKey(e => new { e.IID, e.MIID })
-                //.HasName("PK_ImageOnMenuItem");
             modelbuilder.Entity<tblImages>().ToTable("tblImages");
             modelbuilder.Entity<tblIngredientInItem>().ToTable("tblIngredientInItem");
-                //.HasKey(e => new { e.IID, e.MIID })
-                //.HasName("PK_IngredientInItem");
             modelbuilder.Entity<tblIngredients>().ToTable("tblIngredients");
             modelbuilder.Entity<tblItemOnMenu>().ToTable("tblItemOnMenu");
-            //.HasKey(e => new { e.MID, e.IID })
-            //.HasName("PK_ItemOnMenu");
             modelbuilder.Entity<tblMenuAtRestaurant>().ToTable("tblMenuAtRestaurant");
-                //.HasKey(e => new { e.RID, e.MID })
-                //.HasName("PK_MenuAtRestaurant");
             modelbuilder.Entity<tblMenuItem>().ToTable("tblMenuItem");
             modelbuilder.Entity<tblMenus>().ToTable("tblMenus");
             modelbuilder.Entity<tblRestaurants>().ToTable("tblRestaurants");
             base.OnModelCreating(modelbuilder);
             modelbuilder.Ignore<IdentityUserLogin<string>>();
         }
-
-
     }
 }
