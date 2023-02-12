@@ -71,16 +71,8 @@ namespace LTPR.Pages.Contact
             }
             try
             {
-                //client.connect instead?
-                SmtpClient sc = new SmtpClient{
-                    Credentials = new NetworkCredential("2126671@chester.ac.uk", "Che20021205"),
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    EnableSsl = true, //with tls?
-                    Host = "smtp.office365.com",
-                    Port = 587
-                };
-
-                SmtpClient sc2 = new SmtpClient
+                // links to email client
+                SmtpClient sc = new SmtpClient
                 {
                     Credentials = new NetworkCredential("adam.drummond9@gmail.com", "xjiglfnicnibaffc"),
                     DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -91,14 +83,20 @@ namespace LTPR.Pages.Contact
 
 
                 MailMessage m = new MailMessage();
+                // from gmail address
                 m.From = new MailAddress("adam.drummond9@gmail.com", "LTPR Enquiry");
+                // sent to Chester email address (emulating restaurant address)
                 m.To.Add(new MailAddress("2126671@chester.ac.uk"));
+                // CC in user's email
                 m.CC.Add(new MailAddress(Email));
+                // adds text and subject line then sends
                 m.Body = $"{Name} said {Message}.";
                 m.Subject = "LTPR Form Enquiry";
-                sc2.Send(m);
+                sc.Send(m);
+                // provided nothing failed, redirects to confirmation page to show user their message.
                 return Redirect("/Contact/Confirm?Message=" + Message);
             }
+            // if something goes wrong, the page is reloaded with an error message
             catch (Exception e)
             {
                 ModelState.AddModelError("Customer Contact Field Error", "Invalid data in customer contact form" + e.Message);

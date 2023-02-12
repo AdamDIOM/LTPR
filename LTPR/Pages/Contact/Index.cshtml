@@ -49,6 +49,7 @@
         </div>
 
         @{
+            // prepares lists of data ready for conversion into JS
             Model.lg = new List<decimal>();
             Model.la = new List<decimal>();
             Model.names = new List<string>();
@@ -72,10 +73,12 @@
                     cooperativeGestures: true
                 });
                 map.addControl(new mapboxgl.NavigationControl());
+                // converts data from ASP/C# to JS Arrays
                 var lngs = @Html.Raw('['+string.Join( ",", Model.lg.ToArray())+']');
                 var lats = @Html.Raw('['+string.Join( ",", Model.la.ToArray())+']');
                 var titles = @Html.Raw("['"+string.Join("','", Model.names.ToArray())+"']");
                 var phNums = @Html.Raw("['"+string.Join("','", Model.phnums.ToArray())+"']");
+                // adds marker for every restaurant from db
                 for(i = 0; i<lngs.length; i++){
                     console.log("loop");
                     console.log(lngs[i] +" "+ lats[i])
@@ -92,9 +95,9 @@
 
     </div>
     @{
+        // shows each restaurant and address on page
         foreach(var restaurant in Model.tblRestaurants)
          {
-            //<hr />
             var add = restaurant.Address.Split(',');
             var ll = restaurant.LangLat.Split(',');
             
@@ -107,41 +110,6 @@
             </div>
         }
      }
-    @*<div class="col-sm-12 col-md-6">
-        <div>Map</div>
-        <!--Mapbox Code-->
-        
-    </div>
-    <div class="col-sm-12 col-md-6">
-        <div class="row">
-            <h2>Addresses</h2>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <p>Le Tre Profezie Ristoranti</p>
-                <p>Elmwood House</p>
-                <p>Glencrutchery Road</p>
-                <p>Douglas</p>
-                <p>Isle of Man</p>
-                <p>IM2 6BN</p>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <p>Le Tre Profezie Ristoranti</p>
-                <p>Elmwood House</p>
-                <p>Glencrutchery Road</p>
-                <p>Douglas</p>
-                <p>Isle of Man</p>
-                <p>IM2 6BN</p>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <p>Le Tre Profezie Ristoranti</p>
-                <p>Elmwood House</p>
-                <p>Glencrutchery Road</p>
-                <p>Douglas</p>
-                <p>Isle of Man</p>
-                <p>IM2 6BN</p>
-            </div>
-        </div>
-        <h2>Address</h2>
-    </div>*@
 </div>
 
 
