@@ -132,11 +132,11 @@
 </div>
 <div>
     <form>@* method="post">*@
-        <div>
+        <div class="form-group">
             Search
             <input asp-for="qry" />
+            <input type="submit" asp-route-qry="@Model.qry" value="Search" class="btn btn-r">
         </div>
-        <button type="submit" asp-route-qry="@Model.qry">Search</button>
     </form>
     @*<a asp-page="./Edit" asp-route-id="@Model.tblMenus?.ID">Edit</a> |*@
     <a asp-page="./Index">Back to Menus</a>
