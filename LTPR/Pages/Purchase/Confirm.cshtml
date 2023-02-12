@@ -13,6 +13,7 @@
 		<div class="col-sm-4 col-md-1">Total</div>
 	</div>
 	double totalCalc = 0;
+	// shows every item on the user's order
 	foreach(var item in Model.tblItemsOnSale)
 	{
 		if(item.SID == Model.id)
@@ -47,11 +48,13 @@
 			totalCalc += Math.Round((double)item.Cost, 2) * item.Qty;
 		}
 	}
+	// calculates total before discount
 	<div class="row">
 		<div class="col-md-6 col-sm-1"></div>
 		<div class="col-md-6 col-sm-11">Subtotal: £@Math.Round(totalCalc, 2).ToString("0.00")</div>
 	</div>
 	<div>
+		// shows discount
 		@if(Model.sale.Discount > 0)
 		{
 			<span>Discount applied: £@Model.sale.Discount.ToString("0.00")</span>

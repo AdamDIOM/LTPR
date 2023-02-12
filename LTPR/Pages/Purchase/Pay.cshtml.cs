@@ -31,6 +31,7 @@ namespace LTPR.Pages.Purchase
         public async Task<IActionResult> OnGetAsync()
         {
             pmtAmt = (int)Math.Round((amount - discount)*100);
+            // if the amount payable is 0 (i.e. discounted 100%) it will redirect straight to the confirmation page instead of paying via Stripe
             if(pmtAmt <= 0 || amount <= 0)
             {
                 int sid = await Process();
@@ -48,6 +49,7 @@ namespace LTPR.Pages.Purchase
             var user = await _userManager.GetUserAsync(User);
             var uid = user.Id;
 
+            // creates new item for tblSales detailing the user, time of sale, any discount and adds it to the table
             var sale = new tblSales
             {
                 UID = user.Id,
@@ -67,6 +69,7 @@ namespace LTPR.Pages.Purchase
 
             await _context.SaveChangesAsync();
 
+            // for every item in the basket, creates a new item in tblItemsOnSale with the sale id, item id, cost at current time and quantity. Then removes each individual item from the basket
             foreach (var item in _context.tblBasket)
             {
                 decimal c = 0;
@@ -101,14 +104,17 @@ namespace LTPR.Pages.Purchase
             var cus = new CustomerService();
             var chs = new ChargeService();
 
+            // try catch will catch any declined cards
             try
             {
+                // creates a Stripe customer
                 var cu = cus.Create(new CustomerCreateOptions
                 {
                     Email = stripeEmail,
                     Source = stripeToken
                 });
 
+                // creates a Stripe charge
                 var ch = chs.Create(new ChargeCreateOptions
                 {
                     Amount = (int)((amount-discount)*100),
@@ -118,11 +124,14 @@ namespace LTPR.Pages.Purchase
                 });
 
                 int id = await Process();
-
+                
+                // if card successfully pays, proceed to confirmation page
                 return Redirect("/Purchase/Confirm?amount=" + Math.Round(amount-discount, 2) + "&id=" + id + "&uid=" + uid);
             }
+            // this catches when a card is declined either for insufficieunds, incorrect expiry date, security code or anything else
             catch (Exception ex)
             {
+                // redirects to failed page with the message from Stripe
                 return Redirect("/Purchase/PaymentFailed?reason=" + ex.Message);
             }
         }

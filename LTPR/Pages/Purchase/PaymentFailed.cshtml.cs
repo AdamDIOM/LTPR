@@ -9,6 +9,7 @@ namespace LTPR.Pages.Purchase
         public string Reason { get; set; }
         public void OnGet()
         {
+            // if user has manually navigated to the page without a Stripe card decline reason, they are sent to the homepage
             if(Reason == null || Reason == "")
             {
                 RedirectToPage("/Index");

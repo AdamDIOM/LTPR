@@ -6,27 +6,31 @@
 }
 <h1>Basket</h1>
 <form method="post">
-<div class="row">
-    <div class="col-3"></div>
-    <div class="col-3">
-        <input asp-for="DiscountCode" placeholder="Discount Code" class="discount-input"/>
+    <!-- discount codes -->
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-3">
+            <input asp-for="DiscountCode" placeholder="Discount Code" class="discount-input"/>
+        </div>
+        <div class="col-3">
+            <button asp-page-handler="Discount" asp-route-DiscountCode="@Model.DiscountCode" class="discount-button btn btn-r">
+                Apply Code
+            </button>
+        </div>
     </div>
-    <div class="col-3">
-        <button asp-page-handler="Discount" asp-route-DiscountCode="@Model.DiscountCode" class="discount-button btn btn-r">
-            Apply Code
-        </button>
+    <hr />
+    <!-- headings -->
+    <div class="row">
+        <div class="col-sm-8 col-md-4">Menu Item</div>
+        <div class="col-sm-4 col-md-3">Menu</div>
+        <div class="col-sm-4 col-md-1">Price</div>
+        <div class="col-sm-4 col-md-3">Quantity</div>
+        <div class="col-sm-4 col-md-1">Total</div>
     </div>
-</div>
-<hr />
-<div class="row">
-    <div class="col-sm-8 col-md-4">Menu Item</div>
-    <div class="col-sm-4 col-md-3">Menu</div>
-    <div class="col-sm-4 col-md-1">Price</div>
-    <div class="col-sm-4 col-md-3">Quantity</div>
-    <div class="col-sm-4 col-md-1">Total</div>
-</div>
-<hr />
+    <hr />
+    <!-- basket items -->
     @{
+        // loops through every item in the basket, if it is attributed to the current logged on user it displays it
         var items = 0;
         foreach (var item in Model.tblBasket)
         {
@@ -38,6 +42,7 @@
                 <div class="col-md-4 col-sm-8">
                     @{
                         var foundId = -1;
+                        // finds the item in the database for more information
                         @for (int i = 0; i < Model.tblMenuItem.Count(); i++)
                         {
                             if (item.IID == Model.tblMenuItem[i].ID)
@@ -58,6 +63,7 @@
                 <div class="col-md-3 col-sm-4">
                     @{
                         foundId = -1;
+                        // finds the menu the item is from for more information
                         @for (int i = 0; i < Model.tblMenus.Count(); i++)
                         {
                             if (item.MID == Model.tblMenus[i].ID)
@@ -71,7 +77,7 @@
                         }
                         else
                         {
-                                    @Html.DisplayFor(modelItem => Model.tblMenus[foundId].Name)
+                            @Html.DisplayFor(modelItem => Model.tblMenus[foundId].Name)
                         }
                     }
                     </div>
@@ -79,6 +85,7 @@
                 <div class="col-md-1 col-sm-4">
                     @{
                         foundId = -1;
+                        // gets the cost of the item at the current time from the database
                         for(int i = 0; i < Model.tblItemOnMenu.Count(); i++)
                         {
                             if(item.MID == Model.tblItemOnMenu[i].MID && item.IID == Model.tblItemOnMenu[i].IID)
@@ -92,54 +99,55 @@
                         }
                         else
                         {
-                                <span>£@Html.DisplayFor(modelItem => Model.tblItemOnMenu[foundId].Cost)</span>
-                                cost = Model.tblItemOnMenu[foundId].Cost;
-                            }
+                            <span>£@Html.DisplayFor(modelItem => Model.tblItemOnMenu[foundId].Cost)</span>
+                            cost = Model.tblItemOnMenu[foundId].Cost;
+                        }
                     }
                 </div>
                 <div class="col-md-3 col-sm-4">
-                    @*
-                    need [-] number [+]
-                    *@
-                        <button asp-page-handler="QtyMinus" asp-route-id="@item.ID" class="btn btn-outline-danger btn-text-black">-</button>
-                        @Html.DisplayFor(modelItem => item.Qty)
-                        <button asp-page-handler="QtyPlus" asp-route-id="@item.ID" class="btn btn-outline-success btn-text-black">+</button>
+                @*quantity modifiers*@
+                    <button asp-page-handler="QtyMinus" asp-route-id="@item.ID" class="btn btn-outline-danger btn-text-black">-</button>
+                    @Html.DisplayFor(modelItem => item.Qty)
+                    <button asp-page-handler="QtyPlus" asp-route-id="@item.ID" class="btn btn-outline-success btn-text-black">+</button>
                 </div>
                 <div class="col-md-1 col-sm-4">
-
-                        <span>£@Math.Round((cost * item.Qty), 2)</span>
-                        @{Model.totalSum += (cost * item.Qty);}
+                    @*shows item subtotal*@
+                    <span>£@Math.Round((cost * item.Qty), 2)</span>
+                    @{Model.totalSum += (cost * item.Qty);}
                 </div>
             }
-            
         </div>
-    }
+        }
         
-    @if(items < 1)
-    {
-        <h2>The basket is empty.</h2>
-        <a asp-page="/Menus/Index" class="btn">View the Menus</a>
-    }
-    else{
-        <div class="row">
-            <div class="col-8"></div>
-            <div class="col-2">Total Cost</div>
-            @Model.UpdateDiscount()
-            <div class="col-2">£@Math.Round(Model.totalSum, 2)</div>
-        </div>
-            <hr />
+        // if there are no items in the basket
+        @if(items < 1)
+        {
+            <h2>The basket is empty.</h2>
+            <a asp-page="/Menus/Index" class="btn">View the Menus</a>
+        }
+        // gets the total cost after discount, shows a discount message and then button to proceed to Stripe payment
+        else
+        {
             <div class="row">
-                <div class="col-3"></div>
-                <div class="col-6">@Model.DiscountResponse</div>
+                <div class="col-8"></div>
+                <div class="col-2">Total Cost</div>
+                @Model.UpdateDiscount()
+                <div class="col-2">£@Math.Round(Model.totalSum, 2)</div>
             </div>
-            <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4">
-                    <button asp-page-handler="Charge" asp-route-totalSum="@Model.totalSum" asp-route-DiscountValue="@Model.DiscountValue" asp-route-id="@Model.user.Id" class="btn btn-r pay-button">
-                        Confirm and Pay £@Math.Round(Model.totalSum-Model.DiscountValue,2)
-                    </button>
+                <hr />
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">@Model.DiscountResponse</div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        @*passes totalSum, DiscountValue and id (user id) parameters to next page for processing*@
+                        <button asp-page-handler="Charge" asp-route-totalSum="@Model.totalSum" asp-route-DiscountValue="@Model.DiscountValue" asp-route-id="@Model.user.Id" class="btn btn-r pay-button">
+                            Confirm and Pay £@Math.Round(Model.totalSum-Model.DiscountValue,2)
+                        </button>
+                    </div>
+                </div>
+        }
     }
-}
 </form>

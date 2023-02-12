@@ -8,6 +8,7 @@
 @using Microsoft.Extensions.Options
 @using Stripe
 @inject IOptions<StripeSettings> Stripe
+<!-- shows total amount payable and the Stripe payment button -->
 <h1>Please pay £@(Math.Round((decimal)Model.pmtAmt / 100, 2).ToString("0.00"))</h1>
 <form asp-page-handler="Charge" asp-route-amount="@Model.amount" asp-route-discount="@Model.discount" asp-route-uid="@Model.id" method="post">
     <script src="https://checkout.stripe.com/checkout.js"

@@ -69,6 +69,7 @@ namespace LTPR.Pages.Purchase
             if (DiscountCode != null)
             {
                 bool found = false;
+                // checks to see if the discount code is valid and whether it is a solid £ amount off or a % off
                 foreach (var code in tblDiscountCodes)
                 {
                     if (code.DiscountCode == DiscountCode)
@@ -79,6 +80,7 @@ namespace LTPR.Pages.Purchase
                         break;
                     }
                 }
+                // sets discount response dependent on whether it exists and then if it is £ or %.
                 if (!found)
                 {
                     DiscountResponse = $"Discount code \"{DiscountCode}\" is invalid.";
@@ -123,6 +125,7 @@ namespace LTPR.Pages.Purchase
             }
             else
             {
+                // finds the item in the basket and subtracts one from its Qty field. If Qty drops below 1, the item is removed from the basket
                 foreach(var item in tblBasket)
                 {
                     if (item.ID == id)
@@ -155,6 +158,7 @@ namespace LTPR.Pages.Purchase
             }
             else
             {
+                // finds the item in the basket and adds one to its Qty field
                 foreach (var item in tblBasket)
                 {
                     if (item.ID == id)
@@ -174,11 +178,13 @@ namespace LTPR.Pages.Purchase
 
         public  IActionResult OnPostCharge(decimal totalSum, decimal DiscountValue, string id)
         {
+            // redirects to the payment page with Strip, passing the same parameters across
             return Redirect("Pay?amount=" + totalSum + "&discount=" + DiscountValue+"&id=" + id);
         }
 
         public  IActionResult OnPostDiscount(string DiscountCode)
         {
+            // reloads the page with the discount code in the url string
             return Redirect("Basket?DiscountCode=" + DiscountCode);
         }
     }

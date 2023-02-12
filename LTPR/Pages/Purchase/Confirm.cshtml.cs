@@ -54,6 +54,7 @@ namespace LTPR.Pages.Purchase
 
         public string CheckSale(double calc)
         {
+            // this checks whether the parameters in the url string are correct to this sale; if they are incorrect the user is promptly redirected away from potentially viewing another customer's data
             if(amount != calc)
             {
                 Response.Redirect("/Index");
