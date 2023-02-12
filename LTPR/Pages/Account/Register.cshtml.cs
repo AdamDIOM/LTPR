@@ -28,6 +28,7 @@ namespace LTPR.Pages.Account
         }
         public async Task OnGetAsync()
         {
+            // sets up admin@ltpr.it to always have admin access
             bool exists = await _roleManager.RoleExistsAsync("Admin");
             if(!exists)
             {
@@ -44,7 +45,8 @@ namespace LTPR.Pages.Account
                 }
             }
 
-                if (email == null)
+            // used for passthrough from register/login page
+            if (email == null)
             {
                 email = "";
             }
@@ -53,6 +55,7 @@ namespace LTPR.Pages.Account
         {
             if (ModelState.IsValid)
             {
+                // creates new user and redirects to homepage otherwise reloads page if there is an error
                 var user = new ApplicationUser { UserName = RegInput.Email, Email = RegInput.Email };
                 var result = await _userManager.CreateAsync(user, RegInput.Password);
                 if (result.Succeeded)
@@ -65,7 +68,6 @@ namespace LTPR.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
             return Page();
         }
     }

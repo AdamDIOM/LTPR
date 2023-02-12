@@ -6,5 +6,5 @@
 
 <h2>Access Denied</h2>
 <h3>You do not have access to this page.</h3>
-
-<form asp-page="/Account/Login" asp-route-ReturnUrl="@Model.ReturnUrl" method="post"><button class="logout-button nav-link text-dark btn btn-link" type="submit">Switch Account</button></form>
+<!-- button sends user to login page with return url for the page that the user previously tried to access -->
+<form asp-page="/Account/Login" asp-route-ReturnUrl="@Model.ReturnUrl" method="post"><button class="logout-button nav-link text-dark btn btn-link btn-r" type="submit">Switch Account</button></form>

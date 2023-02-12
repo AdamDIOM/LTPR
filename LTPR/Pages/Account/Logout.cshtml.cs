@@ -15,6 +15,7 @@ namespace LTPR.Pages.Account
     
         public async Task<IActionResult> OnGetAsync()
         {
+            // runs SignInManager sign out code and then returns user to homepage
             await _signInManager.SignOutAsync();
             
 		    return RedirectToPage("/Index");

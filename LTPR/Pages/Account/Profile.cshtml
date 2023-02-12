@@ -15,6 +15,7 @@
                     @Model.userName
                 </dd>
             </dl>
+            <!-- Change password functionality -->
             <form method="post">
             <dl class="row">
                 <dt class="col-sm-5">
@@ -58,16 +59,19 @@
             <h1>Past Orders</h1>
             @{
                 var uid = Model.userManager.GetUserId(User);
+                // gets every sale for the current user. 
                 foreach(var sale in Model.tblSales)
                 {
                     decimal cost = 0;
                     if(sale.UID == uid)
                     {
                         <h3>Sale ID: @sale.ID | Date: @sale.OrderTime</h3>
+                        // Shows every item from this sale
                         foreach(var item in Model.tblItemsOnSale)
                         {
                             if(item.SID == sale.ID)
                             {
+                                // gets more detaila bout the menu item from database
                                 foreach(var menuitem in Model.tblMenuItem)
                                 {
                                     if(item.IID == menuitem.ID)
@@ -80,6 +84,7 @@
 
                             }
                         }
+                        // shows information about the discount on the sale, if any
                         if(sale.Discount > 0)
                         {
                             <p>Subtotal: £@(cost.ToString("0.00"))</p>

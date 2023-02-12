@@ -14,7 +14,7 @@ namespace LTPR.Pages.Account
 		[BindProperty(SupportsGet = true)]
 		public string ReturnUrl { get; set; }
 		[BindProperty]
-        public Models.LogonModel LogonInput { get; set; }
+        public LogonModel LogonInput { get; set; }
         private readonly SignInManager<ApplicationUser> _signInManager;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager)
@@ -24,6 +24,7 @@ namespace LTPR.Pages.Account
 
         public void OnGet()
         {
+            // checks to see whether there was an email passed as parameter, if not sets it to blank string to ensure no error
             if(email == null)
             {
                 email = "";
@@ -34,9 +35,11 @@ namespace LTPR.Pages.Account
         {
             if (ModelState.IsValid)
             {
+                // uses SignInManager to see if user and password is a match.. If not, the page is reloaded for another attempt
                 var result = await _signInManager.PasswordSignInAsync(LogonInput.Email, LogonInput.Password, false, false);
                 if (result.Succeeded)
                 {
+                    // if there is no specified return url, return to homepage, otherwise it attempts to redirect to the given url or given url index page
                     if(ReturnUrl == null)
                     {
                         return RedirectToPage("/Index");

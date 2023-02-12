@@ -11,9 +11,6 @@ namespace LTPR.Pages.Account
         public void OnGet()
         {
         }
-
-
-
         [BindProperty]
         public string Email { get; set; }
 
@@ -26,6 +23,7 @@ namespace LTPR.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // attempts to find user in database, if user exists they are redirected to Login page, otherwise to the Register page. Both pass the entered email address as a parameter to the next page
             var user = await _userManager.FindByNameAsync(Email);
             if(user != null)
             {
