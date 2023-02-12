@@ -50,12 +50,12 @@ namespace LTPR.Pages
             {
                 return NotFound();
             }
-
+            // finds current user and checks to see if item is already in basket
             var user = await _userManager.GetUserAsync(User);
-            //need to add check for item in basket
             var f = false;
             foreach (var item in _context.tblBasket)
             {
+                // if item is in user's basket, it increases Qty field by 1 and then adds modified EF model to context, staged for saving.
                 if (item.UID == user.Id && item.IID == (int)iid && item.MID == (int)mid)
                 {
                     var i = await _context.tblBasket.FirstOrDefaultAsync(m => m.ID == item.ID);
@@ -65,6 +65,7 @@ namespace LTPR.Pages
                     break;
                 }
             }
+            // if not found in current user's basket, a new entry is created.
             if (!f)
             {
                 _context.tblBasket.Add(new Models.tblBasket
@@ -75,7 +76,7 @@ namespace LTPR.Pages
                     Qty = 1 //check if item already in basket
                 });
             }
-
+            // saves to database and reloads page
             await _context.SaveChangesAsync();
             return RedirectToPage();
         }

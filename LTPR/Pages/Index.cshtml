@@ -31,7 +31,7 @@
         <tbody>
     @{
         var today = DateTime.Now.DayOfWeek.ToString().Substring(0, 3).ToUpper();
-        @*<form method="post">*@
+        // checks every item in menus to see if any are on special for today, and then displays it along with a button to add the item to basket and a link to view the rest of the menu it came from
             foreach(var iom in Model.tblItemOnMenu)
             {
                 if(iom.SpecialDay == today)
