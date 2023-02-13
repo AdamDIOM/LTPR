@@ -12,12 +12,15 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <h1 class="display-4">Ciao, @UserManager.GetUserName(User)</h1>
+            <h2>Today's (@DateTime.Now.DayOfWeek) Specials</h2>
         }
         else
         {
             <h1 class="display-4">Ciao</h1>
+            <h2>Today's (@DateTime.Now.DayOfWeek) Specials</h2>
+            <strong>Please <a asp-page="/Account/Index">login or register</a> in order to add items to a basket</strong>
         }
-    <h2>Today's (@DateTime.Now.DayOfWeek) Specials</h2>
+
     </div>
     <table class="specials-tbl">
         <thead>
