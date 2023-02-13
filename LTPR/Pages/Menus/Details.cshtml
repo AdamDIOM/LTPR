@@ -10,6 +10,11 @@
 <div>
     <hr />
     <h2>@Html.DisplayFor(model => model.tblMenus.Name)</h2>
+    @if (!Model.signInManager.IsSignedIn(User))
+    {
+        <h3>Please login in order to add items to a basket.</h3>
+        <form asp-page="/Account/Login" asp-route-ReturnUrl="/Menus/Details/@Model.MenuId" method="post"><button class="btn btn-link btn-r" type="submit">Login</button></form>
+    }
 </div>
 <div class="accordion">
 

@@ -38,6 +38,7 @@ namespace LTPR.Pages.Menus
         public IList<tblImages> tblImages { get; set; } = default!;
 
         public IList<tblBasket> tblBasket { get; set; } = default!;
+        public int MenuId { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -45,6 +46,7 @@ namespace LTPR.Pages.Menus
             {
                 return NotFound();
             }
+            MenuId = (int)id;
 
             //if (_context.tblItemOnMenu != null)
             {
