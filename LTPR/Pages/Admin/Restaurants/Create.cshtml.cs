@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LTPR.Pages.Admin.Restaurants
 {
+    // standard ASP Razor Page CRUD page
     public class CreateModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
@@ -44,6 +45,7 @@ namespace LTPR.Pages.Admin.Restaurants
             _context.tblRestaurants.Add(tblRestaurants);
             await _context.SaveChangesAsync();
 
+            // checks to see if there is a return url parameter in the url such as for a link table page
             if (ru == "")
             {
                 return RedirectToPage("./Index");

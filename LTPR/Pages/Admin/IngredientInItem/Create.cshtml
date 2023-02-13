@@ -17,6 +17,7 @@
                 <select asp-for="tblIngredientInItem.MIID" class="form-control">
                     @foreach(var item in Model.tblMenuItem)
                     {
+                        // adds any non retired item to select options
                         if (!item.Retired)
                         {
                             <option value=@item.ID>@item.Name</option>

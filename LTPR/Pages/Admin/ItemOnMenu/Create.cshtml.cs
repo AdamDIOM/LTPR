@@ -11,6 +11,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.ItemOnMenu
 {
+    // standard ASP Razor Page CRUD page
     public class CreateModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;

@@ -27,6 +27,7 @@
                 <select asp-for="tblMenuAtRestaurant.MID" class="form-control">
                     @foreach(var menu in Model.tblMenus)
                     {
+                        // adds option for each menu to the selector
                         <option value=@menu.ID>@menu.Name</option>
                     }
                 </select>

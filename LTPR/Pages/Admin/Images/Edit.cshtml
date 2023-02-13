@@ -17,6 +17,7 @@
                 <input asp-for="tblImages.ImageData" class="form-control" value="@Convert.ToBase64String(Model.tblImages.ImageData)" type="hidden" />
                 @try
                 {
+                    // converts base64 string to image 
                     <img class="med-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.tblImages.ImageData))" alt="@Model.tblImages.ImageDescription" />
                 }
                 catch

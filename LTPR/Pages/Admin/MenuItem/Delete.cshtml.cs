@@ -10,6 +10,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.MenuItem
 {
+    // standard ASP Razor Page CRUD page
     public class DeleteModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;
@@ -53,6 +54,7 @@ namespace LTPR.Pages.Admin.MenuItem
             if (tblmenuitem != null)
             {
                 tblMenuItem = tblmenuitem;
+                // instead of doing .Remove, this sets the Retired property to true
                 tblMenuItem.Retired = true;
                 //_context.tblMenuItem.Remove(tblMenuItem);
                 _context.Attach(tblMenuItem).State = EntityState.Modified;

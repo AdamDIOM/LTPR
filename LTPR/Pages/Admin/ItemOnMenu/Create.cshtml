@@ -27,6 +27,7 @@
                 <select asp-for="tblItemOnMenu.IID" class="form-control">
                     @foreach(var item in Model.tblMenuItem)
                     {
+                        // displays any active menu item as a select option
                         if (!item.Retired)
                         {
                             <option value=@item.ID>@item.Name</option>

@@ -14,6 +14,7 @@
         <dd class="col-sm-12">
             @try
             {
+                // convert base64 string to image
                 <img class="large-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(@Model.tblImages.ImageData))" alt="@Model.tblImages.ImageDescription" />
             }
             catch

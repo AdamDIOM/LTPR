@@ -11,6 +11,8 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.MenuAtRestaurant
 {
+    // UNUSED
+    // standard ASP Razor Page CRUD page
     public class EditModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;

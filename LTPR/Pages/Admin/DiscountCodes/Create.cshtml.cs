@@ -10,6 +10,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.DiscountCodes
 {
+    // standard ASP Razor Page CRUD page
     public class CreateModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;
@@ -27,8 +28,6 @@ namespace LTPR.Pages.Admin.DiscountCodes
         [BindProperty]
         public tblDiscountCodes tblDiscountCodes { get; set; }
         
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
           if (!ModelState.IsValid)

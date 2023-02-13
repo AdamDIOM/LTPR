@@ -10,6 +10,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.ImageOnMenuItem
 {
+    // standard ASP Razor Page CRUD page with added dbset links
     public class IndexModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;

@@ -46,6 +46,7 @@ namespace LTPR.Pages.Admin.Users
                 return NotFound();
             }
 
+            // if user exists, create a reset token and then reset the password using said token
             var user = await _userManager.FindByNameAsync(UserName);
             if (user != null)
             {

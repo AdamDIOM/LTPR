@@ -10,6 +10,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.Menus
 {
+    // standard ASP Razor Page CRUD page
     public class CreateModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
@@ -41,6 +42,8 @@ namespace LTPR.Pages.Admin.Menus
             _context.tblMenus.Add(tblMenus);
             await _context.SaveChangesAsync();
 
+
+            // checks to see if there is a return url parameter in the url such as for a link table
             if (ru == "")
             {
                 return RedirectToPage("./Index");

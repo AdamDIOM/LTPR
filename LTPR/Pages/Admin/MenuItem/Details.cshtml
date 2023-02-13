@@ -2,7 +2,7 @@
 @model LTPR.Pages.Admin.MenuItem.DetailsModel
 
 @{
-    ViewData["Title"] = "Menu Item Delete - Admin Data Editor";
+    ViewData["Title"] = "Menu Item Details - Admin Data Editor";
 }
 
 <h1>Menu Item Details</h1>
@@ -30,6 +30,7 @@
         {
             foreach (var iii in Model.tblIngredientInItem)
             {
+                // if it's on the right menu and is the right ingredient
                 if (iii.MIID == Model.tblMenuItem.ID && iii.IID == ingredient.ID)
                 {
                     <dt>
@@ -41,27 +42,27 @@
     </dl>
     <hr />
     <h4>Images</h4>
-    <dl>
+    <div>
         @foreach (var image in Model.tblImages)
         {
             foreach (var iomi in Model.tblImageOnMenuItem)
             {
+                // if it's the right menu item and has an image
                 if (iomi.MIID == Model.tblMenuItem.ID && iomi.IID == image.ID)
                 {
-                    @*<dt>*@
-                        @try
-                        {
-                            <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(image.ImageData))" alt="@image.ImageDescription" />
-                        }
-                        catch
-                        {
-                            <img class="img-thumb" src="/img/no-image.png" alt="no image available" />
-                        }
-                    @*</dt>*@
+                    try
+                    {
+                        // converts base64 string to image
+                        <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(image.ImageData))" alt="@image.ImageDescription" />
+                    }
+                    catch
+                    {
+                        <img class="img-thumb" src="/img/no-image.png" alt="no image available" />
+                    }
                 }
             }
         }
-    </dl>
+    </div>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.tblMenuItem?.ID">Edit Menu Item</a> |

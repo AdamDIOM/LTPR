@@ -10,6 +10,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.Ingredients
 {
+    // standard ASP Razor Page CRUD page
     public class DetailsModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;

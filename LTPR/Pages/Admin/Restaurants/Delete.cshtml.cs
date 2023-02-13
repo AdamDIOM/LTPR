@@ -10,6 +10,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.Restaurants
 {
+    // standard ASP Razor Page CRUD page
     public class DeleteModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;

@@ -16,6 +16,7 @@
         </dt>
         <dd class="col-sm-10">
             @{
+                // finds details about the menu item and displays thte name, if not found displays link ID
                 var foundId = -1;
                 @for (int i = 0; i < Model.tblMenuItem.Count(); i++)
                 {
@@ -39,6 +40,7 @@
         </dt>
         <dd class="col-sm-10">
             @{
+                // finds the image that goes with the menu item
                 foundId = -1;
                 @for (int i = 0; i < Model.tblImages.Count(); i++)
                 {
@@ -55,6 +57,7 @@
                 {
                     @try
                     {
+                        // converts base64 string to image
                         <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.tblImages[foundId].ImageData))" alt="@Model.tblImages[foundId].ImageDescription" />
                     }
                     catch

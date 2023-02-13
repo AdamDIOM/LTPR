@@ -23,28 +23,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.tblImages) {
+        @foreach (var item in Model.tblImages) {
             <tr>
                 <td>
                     @try
                     {
+                        // converts base64 string to image
                         <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ImageData))" alt="@item.ImageDescription" />
                     } catch
                     {
                         <img class="img-thumb" src="/img/no-image.png" alt="no image available" />
                     }
-                    @*@Html.DisplayFor(modelItem => item.ImageData)*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageDescription)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageDescription)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

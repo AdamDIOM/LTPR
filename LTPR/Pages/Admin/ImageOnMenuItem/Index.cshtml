@@ -27,6 +27,7 @@
             <tr>
                 <td>
                     @{
+                        // searches through tblMenuItem to find the corresponsing item and thus details
                         var foundIdP = -1;
                         @for (int i = 0; i < Model.tblMenuItem.Count(); i++)
                         {
@@ -47,6 +48,7 @@
                 </td>
                 <td>
                     @{
+                        // searches through tblImages to find corresponding image that goes with the menu item
                         var foundId = -1;
                         @for (int i = 0; i < Model.tblImages.Count(); i++)
                         {
@@ -63,6 +65,7 @@
                         {
                             @try
                             {
+                                // converts base64 string to image
                                 <img class="menu-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.tblImages[foundId].ImageData))" alt="@Model.tblImages[foundId].ImageDescription" />
                             } catch
                             {
@@ -72,6 +75,7 @@
                     }
                 </td>
                 <td>
+                    @* does not allow editing of menu item if it has been deleted (detired) *@
                     @if(foundIdP != -1 && !Model.tblMenuItem[foundIdP].Retired)
                     {
                         <a asp-page="./Delete" asp-route-id="@item.ID">Remove Image from Menu Item</a>

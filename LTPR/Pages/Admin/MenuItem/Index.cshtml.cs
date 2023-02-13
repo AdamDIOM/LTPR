@@ -10,6 +10,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.MenuItem
 {
+    // standard ASP Razor Page CRUD page
     public class IndexModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;
@@ -30,9 +31,11 @@ namespace LTPR.Pages.Admin.MenuItem
             {
                 tblMenuItem = await _context.tblMenuItem.ToListAsync();
                 tblMIList = tblMenuItem.ToList();
+                // this shows the retired items at the bottom
                 tblMIList = tblMIList.OrderBy(x => x.Retired).ToList();
 
             }
+            // if there is a route parameter for unretire, get the menu item and set retired to false.
             if(Unretire > 0)
             {
                 var tblmenuitem = await _context.tblMenuItem.FirstOrDefaultAsync(m => m.ID == Unretire);

@@ -13,7 +13,6 @@ namespace LTPR.Pages.Admin.Users
 {
     public class DeleteModel : PageModel
     {
-
         private readonly UserManager<ApplicationUser> _userManager;
         public string user;
         public DeleteModel(UserManager<ApplicationUser> userManager)
@@ -42,8 +41,12 @@ namespace LTPR.Pages.Admin.Users
                 return NotFound();
             }
 
+            // find user, if it exists, delete it from the list of all users
             var user = await _userManager.FindByNameAsync(UserName);
-            var result = await _userManager.DeleteAsync(user);
+            if(user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+            }
 
             return RedirectToPage("./Index");
         }

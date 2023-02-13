@@ -10,6 +10,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.Ingredients
 {
+    // standard ASP Razor Page CRUD page
     public class CreateModel : PageModel
     {
         [BindProperty(SupportsGet = true)]

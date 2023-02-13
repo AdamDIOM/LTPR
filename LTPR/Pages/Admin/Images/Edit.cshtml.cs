@@ -11,6 +11,7 @@ using LTPR.Models;
 
 namespace LTPR.Pages.Admin.Images
 {
+    // standard ASP Razor Page CRUD page
     public class EditModel : PageModel
     {
         private readonly LTPR.Data.Admin _context;
@@ -67,7 +68,7 @@ namespace LTPR.Pages.Admin.Images
 
             return RedirectToPage("./Index");
         }
-
+        // checks if a table exists by attempting to return an item of specific id
         private bool tblImagesExists(int id)
         {
           return _context.tblImages.Any(e => e.ID == id);

@@ -44,12 +44,15 @@
                 </td>
                 <td>
                     @{
+                        // calculates the total value of each individual order
                         decimal sum = 0;
                         foreach(var item in Model.tblItemsOnSale)
                         {
+                            // displays every item in the specific sale
                             if(item.SID == sale.ID)
                             {
                                 var found = false;
+                                // gets more information about the menu item from database
                                 foreach(var mi in Model.tblMenuItem)
                                 {
                                     if(mi.ID == item.IID)
@@ -67,13 +70,14 @@
                                 sum += (item.Qty * item.Cost);
                             }
                         }
-
+                        // if discount exists, show a subtotal, what discount was applied
                         if (sale.Discount > 0)
                         {
                             <p>Subtotal: £@(sum.ToString("0.00"))</p>
                             <span>Discount applied: £@Math.Round(sale.Discount, 2)</span>
                         }
-                            <b>Total Cost: £@(((double)sum-sale.Discount).ToString("0.00"))</b>
+                        // display what the total cost was
+                        <b>Total Cost: £@(((double)sum-sale.Discount).ToString("0.00"))</b>
                     }
                 </td>
             </tr>

@@ -7,8 +7,6 @@
 
 <h1>Users Index - Admin Data Editor</h1>
 
-<p>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -19,18 +17,17 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var user in Model.users) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => user.UserName)
-            </td>
-            <td>
-                @*<a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |*@
-                <a asp-page="./ChangePassword" asp-route-UserName="@user.UserName">Change Password</a> |
-                <a asp-page="./Delete" asp-route-UserName="@user.UserName">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var user in Model.users) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => user.UserName)
+                </td>
+                <td>
+                    <a asp-page="./ChangePassword" asp-route-UserName="@user.UserName">Change Password</a> |
+                    <a asp-page="./Delete" asp-route-UserName="@user.UserName">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
