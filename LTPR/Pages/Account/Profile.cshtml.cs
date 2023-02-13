@@ -5,6 +5,7 @@ using LTPR.Data;
 using System.Security.Policy;
 using LTPR.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace LTPR.Pages.Account
 {
@@ -17,6 +18,9 @@ namespace LTPR.Pages.Account
         private readonly LTPR.Data.Admin _context;
 
         [BindProperty]
+        [DataType(DataType.Password)]
+        [Required]
+        [Display(Name = "Current Password")]
         public string CurrentPassword { get; set; }
 
         [BindProperty]
@@ -52,6 +56,24 @@ namespace LTPR.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
+            userName = userManager.GetUserName(User);
+            if (_context.tblSales != null)
+            {
+                tblSales = await _context.tblSales.ToListAsync();
+            }
+            if (_context.tblItemsOnSale != null)
+            {
+                tblItemsOnSale = await _context.tblItemsOnSale.ToListAsync();
+            }
+            if (_context.tblMenuItem != null)
+            {
+                tblMenuItem = await _context.tblMenuItem.ToListAsync();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             // if user enters correct current password, change their password to the new password
             var user = await userManager.GetUserAsync(User);
             if(await userManager.CheckPasswordAsync(user, CurrentPassword))
@@ -63,7 +85,6 @@ namespace LTPR.Pages.Account
             {
                 return Page();
             }
-            
         }
     }
 }
