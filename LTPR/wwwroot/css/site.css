@@ -7,16 +7,6 @@ html {
         font-size: 16px;
     }
 }
-/*
-html{
-    position:abslute;
-}*/
-
-/*
-div{
-    display:block;
-}
-*/
 main {
     min-height:87vh;
     height:auto;
@@ -25,14 +15,10 @@ main {
 
 header {
     background-color: #ff8888;
-    /*height:7vh;*/
 }
-/*header nav{
-    height:100%;
-}*/
 
 footer {
-    background-color: forestgreen;
+    background-color: #375e2d;
     color: antiquewhite;
     height: 5vh;
     text-align: center;
@@ -45,21 +31,10 @@ footer {
 footer a{
     color:antiquewhite;
 }
-    
-/*div{
-    display:block;
-}*/
-
 
 .gallery-image {
     width: 100%;
 }
-/*
-.item{
-    border:2px solid forestgreen;
-    padding:2px;
-    margin-bottom:5px;
-}*/
 
 .menu-image{
     height:75px;
@@ -118,24 +93,3 @@ footer a{
 .btn-text-black{
     color:black;
 }
-
-/*@media (max-width:767px) {
-    .btn-header {
-        width: 100vw;
-        padding-left:0px;
-        border-radius: 0;
-    }
-    .dropdownMenu {
-        padding: 0px;
-        margin-left: 0px;
-        margin-right: 0px;
-        width: 100vw;
-    }
-    .navbarTitle{
-        margin-left:10vw;
-    }
-    .navbarButton{
-        margin-right:10vw;
-        margin-left:auto;
-    }
-}*/

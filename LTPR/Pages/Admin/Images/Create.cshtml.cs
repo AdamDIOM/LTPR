@@ -75,7 +75,7 @@ namespace LTPR.Pages.Admin.Images
             await _context.SaveChangesAsync();
 
             // if there is no return url (e.g. to link table), go back to the Images Index
-            if(ru == "")
+            if(ru == "" || ru == null)
             {
                 return RedirectToPage("./Index");
             }
