@@ -17,6 +17,9 @@ namespace LTPR.Pages.Admin.Images
         // return url used with link tables
         [BindProperty(SupportsGet = true)]
         public string ru { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string noImg { get; set; }
+        public string noImgMsg { get; set; }
         private readonly LTPR.Data.Admin _context;
 
         public CreateModel(LTPR.Data.Admin context)
@@ -26,6 +29,15 @@ namespace LTPR.Pages.Admin.Images
 
         public IActionResult OnGet()
         {
+            if(noImg == "true")
+            {
+                noImgMsg = "Image upload required.";
+                ModelState.AddModelError("image", "No image uploaded.");
+            }
+            else
+            {
+                noImgMsg = "";
+            }
             return Page();
         }
 
@@ -38,10 +50,15 @@ namespace LTPR.Pages.Admin.Images
         {
           if (!ModelState.IsValid)
             {
-                //return Page();
+                ModelState.AddModelError("image", "No image uploaded.");
+                return Page();
             }
 
           // if the user has uploaded any files, set ImageData to the selected 
+          if(Request.Form.Files.Count < 1)
+            {
+                return Redirect("Create?noImg=true");
+            }
           foreach(var file in Request.Form.Files)
             {
                 // copies file data into an array and then into the object
