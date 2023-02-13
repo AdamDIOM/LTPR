@@ -80,8 +80,11 @@
                                 }
                                 }
                         </td>
-                        <td>
-                                <form method="post"><button asp-page-handler="Basket" asp-route-iid="@iom.IID" asp-route-mid="@iom.MID" class="btn btn-r">Add to basket</button></form>
+                            <td>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <form method="post"><button asp-page-handler="Basket" asp-route-iid="@iom.IID" asp-route-mid="@iom.MID" class="btn btn-r">Add to basket</button></form>
+                                }
                         </td>
                     </tr>
                 }
