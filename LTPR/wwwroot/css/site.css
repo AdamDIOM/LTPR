@@ -93,3 +93,9 @@ footer a{
 .btn-text-black{
     color:black;
 }
+.nav-item{
+    margin-right:4px;
+}
+.navbar-collapse{
+    margin-top:5px;
+}
