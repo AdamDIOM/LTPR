@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using LTPR.Data;
 using LTPR.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LTPR.Pages.Admin.DiscountCodes
 {
@@ -30,6 +31,16 @@ namespace LTPR.Pages.Admin.DiscountCodes
         
         public async Task<IActionResult> OnPostAsync()
         {
+            // checks if the discount code already exists, and if it does it uses ModelState to return an error
+            if(_context.tblDiscountCodes != null)
+            {
+                IList<tblDiscountCodes> tdc = await _context.tblDiscountCodes.ToListAsync();
+                if(tdc.FirstOrDefault(m => m.DiscountCode == tblDiscountCodes.DiscountCode) != null)
+                {
+                    // this will set ModelState to not valid
+                    ModelState.AddModelError("duplicate", "Discount Code already exists!");
+                }
+            }
           if (!ModelState.IsValid)
             {
                 return Page();
