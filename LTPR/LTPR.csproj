@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <ScopedCssEnabled>false</ScopedCssEnabled>
+    <UserSecretsId>b3d05acb-8893-4982-8340-2f61d7122189</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

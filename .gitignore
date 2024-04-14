@@ -365,3 +365,6 @@ FodyWeavers.xsd
 # macOS files
 .DS_Store
 ._*
+
+# appsettings with keys
+appsettings.json
